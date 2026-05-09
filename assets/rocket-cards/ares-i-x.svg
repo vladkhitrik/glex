@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Ares I-X rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c99b5"/><stop offset="1" stop-color="#2b445b"/></linearGradient>
+    <radialGradient id="sun" cx="50%" cy="22%" r="25%"><stop offset="0" stop-color="#fff4c7"/><stop offset="0.42" stop-color="#ffd271"/><stop offset="1" stop-color="rgba(255,210,113,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 228)">
+    <path d="M0 -154 L16 -122 L16 72 L44 106 L44 126 L14 102 L-14 102 L-44 126 L-44 106 L-16 72 L-16 -122 Z" fill="#f5f7fa"/>
+    <rect x="-8" y="-106" width="16" height="156" fill="#c91924"/>
+    <rect x="-8" y="-84" width="16" height="16" fill="#f5f7fa"/>
+    <rect x="-8" y="-46" width="16" height="16" fill="#f5f7fa"/>
+    <rect x="-8" y="-8" width="16" height="16" fill="#f5f7fa"/>
+    <path d="M-12 126 L0 170 L12 126 Z" fill="#ff9841"/>
+  </g>
+  <text x="24" y="390" fill="#f2f6fa" font-size="42" font-family="Orbitron, Arial, sans-serif" font-weight="700">ARES I-X</text>
+</svg>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e6fa8" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
+    <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
+    <title>Glex | Rockets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="space-theme">
+    <div class="sky-bg" aria-hidden="true"></div>
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-stack">
+          <div class="brand">GLEX</div>
+          <div class="brand-tagline">Experience the Air</div>
+        </div>
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
+          <img id="headerProfileImage" class="header-avatar" alt="Profile" />
+          <span id="headerProfileName" class="header-name">Pilot</span>
+        </a>
+      </div>
+      <nav class="toolbar" aria-label="Main toolbar">
+        <a class="toolbar-btn" href="home.html">Home</a>
+        <a class="toolbar-btn" href="rockets.html">Rockets</a>
+        <a class="toolbar-btn" href="boats.html">Boats</a>
+        <a class="toolbar-btn" href="drones.html">Drones</a>
+        <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="profile">Profile</button>
+        <button class="toolbar-btn" data-action="settings">Settings</button>
+      </nav>
+      <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
+    </header>
+
+    <dialog id="infoDialog" class="modal">
+      <h3>What You Can Do In Glex</h3>
+      <ul>
+        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Read quick learning cards about each technology area.</li>
+        <li>Open Credits to see the creators.</li>
+        <li>Open Profile to set your name and image.</li>
+        <li>Your profile is saved in your browser automatically.</li>
+      </ul>
+      <button class="close-btn" data-close="infoDialog">Close</button>
+    </dialog>
+
+    <dialog id="creditsDialog" class="modal">
+      <h3>Credits</h3>
+      <p><span class="credit-initial">DK</span> Daniil Khitrik and <span class="credit-initial">OR</span> Oscar Rushrook.</p>
+      <button class="close-btn" data-close="creditsDialog">Close</button>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal">
+      <h3>Settings</h3>
+      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
+      <div class="settings-row">
+        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+        <span id="fontSizeLabel">16px</span>
+        <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
+      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
+    </dialog>
+
+    <dialog id="profileDialog" class="modal">
+      <h3>Your Profile</h3>
+      <label for="nameInput">Name</label>
+      <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+      <label for="imageInput">Profile Image</label>
+      <input id="imageInput" type="file" accept="image/*" />
+      <small id="imageStatus" class="image-status">No picture chosen yet</small>
+      <div class="profile-preview">
+        <img id="profileImage" alt="Profile preview" />
+        <strong id="profileName">Pilot</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfileBtn" class="save-btn">Save Profile</button>
+        <button class="close-btn" data-close="profileDialog">Close</button>
+      </div>
+    </dialog>
+
+    <main class="topic-main">
+      <article class="topic-card">
+        <h1>Rockets</h1>
+        <p>
+          Rockets are powerful launch vehicles designed to overcome Earth's gravity and carry payloads into space.
+          Multi-stage engineering, fuel chemistry, guidance computers, and heat-resistant structures all work together
+          so missions can place satellites in orbit, deliver cargo to stations, and support deep-space exploration.
+        </p>
+
+        <figure class="topic-image">
+          <img
+            src="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=1000&q=80&auto=format"
+            alt="A rocket launching into the sky"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://picsum.photos/seed/rocket/1000/500'"
+          />
+          <figcaption>Photo: Unsplash — rocket launch</figcaption>
+        </figure>
+
+        <section class="build-steps">
+          <h2>Build Your Own Model Rocket</h2>
+          <ol>
+            <li><strong>Choose a kit or gather materials</strong> — pick a beginner Estes rocket kit, or source a cardboard body tube, balsa fins, and a plastic nose cone.</li>
+            <li><strong>Build the body tube</strong> — cut the tube to length, sand any rough edges, and mark fin placement lines evenly around the base.</li>
+            <li><strong>Attach the fins</strong> — glue balsa or plastic fins to the base of the tube using wood glue or epoxy; let cure fully before handling.</li>
+            <li><strong>Install the motor mount</strong> — slide the engine mount tube into the bottom of the body tube and secure it with glue; attach the motor hook.</li>
+            <li><strong>Add recovery wadding and parachute</strong> — fold a small parachute and attach shroud lines to the nose cone; pack it inside the top of the tube with fireproof recovery wadding underneath.</li>
+            <li><strong>Paint and decorate</strong> — apply primer, then paint in your chosen colours; add stickers or decals when dry.</li>
+            <li><strong>Insert the engine</strong> — load a recommended engine (e.g. Estes C6-5) into the motor mount just before launch.</li>
+            <li><strong>Launch safely</strong> — set up a launch rod and controller on open flat ground away from people, connect the igniter, move to the safety distance (at least 15 m), and press the launch button.</li>
+          </ol>
+        </section>
+
+        <section class="nasa-archive-section" aria-labelledby="rocketArchiveHeading">
+          <h2 id="rocketArchiveHeading" class="fun-facts-heading">All NASA Rockets Archive</h2>
+          <p class="archive-subtitle">
+            Scroll through the rocket list and open each one for facts plus a labeled blueprint of the main pieces.
+          </p>
+          <div class="rocket-button-grid">
+            <a class="rocket-archive-btn" href="rocket.html?rocket=mercury-redstone">
+              <img src="assets/rocket-cards/mercury-redstone.svg" alt="Mercury Redstone style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Mercury-Redstone</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=atlas-lv3b">
+              <img src="assets/rocket-cards/atlas-lv3b.svg" alt="Atlas style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Atlas LV-3B</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=titan-ii-glv">
+              <img src="assets/rocket-cards/titan-ii-glv.svg" alt="Titan style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Titan II GLV</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-i">
+              <img src="assets/rocket-cards/saturn-i.svg" alt="Saturn I style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Saturn I</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-ib">
+              <img src="assets/rocket-cards/saturn-ib.svg" alt="Saturn IB style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Saturn IB</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-v">
+              <img src="assets/rocket-cards/saturn-v.svg" alt="Saturn V style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Saturn V</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=space-shuttle">
+              <img src="assets/rocket-cards/space-shuttle-stack.svg" alt="Space shuttle launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Space Shuttle Stack</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=ares-i-x">
+              <img src="assets/rocket-cards/ares-i-x.svg" alt="Ares I-X style launch vehicle" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>Ares I-X</span>
+            </a>
+            <a class="rocket-archive-btn" href="rocket.html?rocket=sls-block-1">
+              <img src="assets/rocket-cards/sls-block-1.svg" alt="SLS style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+              <span>SLS Block 1</span>
+            </a>
+          </div>
+        </section>
+      </article>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>

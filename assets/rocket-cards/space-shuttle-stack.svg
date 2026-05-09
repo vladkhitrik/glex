@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Space Shuttle Stack rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7896b6"/><stop offset="1" stop-color="#263f5d"/></linearGradient>
+    <radialGradient id="sun" cx="50%" cy="22%" r="25%"><stop offset="0" stop-color="#fff3c8"/><stop offset="0.44" stop-color="#ffd074"/><stop offset="1" stop-color="rgba(255,208,116,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 240)">
+    <rect x="-14" y="-128" width="28" height="154" rx="12" fill="#d98a3d"/>
+    <rect x="-42" y="-120" width="12" height="138" fill="#edf1f8"/>
+    <rect x="30" y="-120" width="12" height="138" fill="#edf1f8"/>
+    <path d="M-64 -24 L-20 -48 L-10 -20 L-46 2 Z" fill="#e6ecf5"/>
+    <path d="M-10 -18 L40 -58 L58 -42 L20 -6 Z" fill="#f7f9fc"/>
+    <path d="M12 26 L-14 26 L0 78 Z" fill="#ff9440"/>
+  </g>
+  <text x="24" y="390" fill="#eff5fc" font-size="36" font-family="Orbitron, Arial, sans-serif" font-weight="700">SPACE SHUTTLE STACK</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Glex app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081a34"/>
+      <stop offset="1" stop-color="#0d3f6b"/>
+    </linearGradient>
+    <linearGradient id="rocket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9eeff"/>
+      <stop offset="1" stop-color="#89bce8"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe29b"/>
+      <stop offset="1" stop-color="#ff7a2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <g opacity="0.65" fill="#b9ddff">
+    <circle cx="88" cy="96" r="4"/>
+    <circle cx="126" cy="74" r="3"/>
+    <circle cx="414" cy="102" r="4"/>
+    <circle cx="390" cy="76" r="3"/>
+    <circle cx="88" cy="420" r="3"/>
+    <circle cx="420" cy="422" r="4"/>
+  </g>
+  <g transform="translate(256 250)">
+    <path d="M0-170C-44-122-64-62-64-4v128h128V-4c0-58-20-118-64-166z" fill="url(#rocket)" stroke="#dff2ff" stroke-width="8"/>
+    <circle cy="-62" r="26" fill="#1b4f80" stroke="#dff2ff" stroke-width="8"/>
+    <path d="M-64 34l-56 54v66l56-30zM64 34l56 54v66l-56-30z" fill="#75a9d8" stroke="#dff2ff" stroke-width="8"/>
+    <path d="M-32 124l-20 58h104l-20-58z" fill="url(#flame)"/>
+    <ellipse cy="188" rx="44" ry="12" fill="#ffb062" opacity="0.8"/>
+  </g>
+  <text x="256" y="468" text-anchor="middle" fill="#d9eeff" font-size="54" font-family="Orbitron, Arial, sans-serif" font-weight="700" letter-spacing="6">GLEX</text>
+</svg>

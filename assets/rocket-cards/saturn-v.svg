@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Saturn V rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8aa3bb"/><stop offset="1" stop-color="#273f56"/></linearGradient>
+    <radialGradient id="sun" cx="50%" cy="21%" r="27%"><stop offset="0" stop-color="#fff8d6"/><stop offset="0.42" stop-color="#ffdc85"/><stop offset="1" stop-color="rgba(255,220,133,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 228)">
+    <path d="M0 -162 L22 -124 L22 74 L60 108 L60 130 L20 106 L-20 106 L-60 130 L-60 108 L-22 74 L-22 -124 Z" fill="#f6f7f9"/>
+    <rect x="-11" y="-116" width="22" height="168" fill="#141b24"/>
+    <rect x="-11" y="-94" width="22" height="14" fill="#f6f7f9"/>
+    <rect x="-11" y="-62" width="22" height="14" fill="#f6f7f9"/>
+    <rect x="-11" y="-30" width="22" height="14" fill="#f6f7f9"/>
+    <path d="M-16 130 L0 182 L16 130 Z" fill="#ff9a42"/>
+  </g>
+  <text x="24" y="390" fill="#f2f6fa" font-size="52" font-family="Orbitron, Arial, sans-serif" font-weight="700">SATURN V</text>
+</svg>

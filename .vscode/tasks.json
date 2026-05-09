@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Open Glex Website",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"start",
+				"index.html"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

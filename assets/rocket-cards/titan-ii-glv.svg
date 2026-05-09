@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Titan II GLV rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d84b8"/><stop offset="1" stop-color="#302f53"/></linearGradient>
+    <radialGradient id="sun" cx="49%" cy="23%" r="25%"><stop offset="0" stop-color="#fff1bd"/><stop offset="0.45" stop-color="#ffc766"/><stop offset="1" stop-color="rgba(255,199,102,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 228)">
+    <path d="M0 -152 L18 -118 L18 72 L44 104 L44 124 L16 103 L-16 103 L-44 124 L-44 104 L-18 72 L-18 -118 Z" fill="#ece9f7"/>
+    <rect x="-8" y="-78" width="16" height="96" fill="#9f90d8"/>
+    <rect x="-8" y="18" width="16" height="34" fill="#cfd5e3"/>
+    <path d="M-12 124 L0 168 L12 124 Z" fill="#ff9342"/>
+  </g>
+  <text x="24" y="390" fill="#f2effa" font-size="40" font-family="Orbitron, Arial, sans-serif" font-weight="700">TITAN II GLV</text>
+</svg>

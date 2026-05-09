@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e6fa8" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
+    <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
+    <title>Glex | Drones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="space-theme">
+    <div class="sky-bg" aria-hidden="true"></div>
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-stack">
+          <div class="brand">GLEX</div>
+          <div class="brand-tagline">Experience the Air</div>
+        </div>
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
+          <img id="headerProfileImage" class="header-avatar" alt="Profile" />
+          <span id="headerProfileName" class="header-name">Pilot</span>
+        </a>
+      </div>
+      <nav class="toolbar" aria-label="Main toolbar">
+        <a class="toolbar-btn" href="home.html">Home</a>
+        <a class="toolbar-btn" href="rockets.html">Rockets</a>
+        <a class="toolbar-btn" href="boats.html">Boats</a>
+        <a class="toolbar-btn" href="drones.html">Drones</a>
+        <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="profile">Profile</button>
+        <button class="toolbar-btn" data-action="settings">Settings</button>
+      </nav>
+      <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
+    </header>
+
+    <dialog id="infoDialog" class="modal">
+      <h3>What You Can Do In Glex</h3>
+      <ul>
+        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Read quick learning cards about each technology area.</li>
+        <li>Open Credits to see the creators.</li>
+        <li>Open Profile to set your name and image.</li>
+        <li>Your profile is saved in your browser automatically.</li>
+      </ul>
+      <button class="close-btn" data-close="infoDialog">Close</button>
+    </dialog>
+
+    <dialog id="creditsDialog" class="modal">
+      <h3>Credits</h3>
+      <p><span class="credit-initial">DK</span> Daniil Khitrik and <span class="credit-initial">OR</span> Oscar Rushrook.</p>
+      <button class="close-btn" data-close="creditsDialog">Close</button>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal">
+      <h3>Settings</h3>
+      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
+      <div class="settings-row">
+        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+        <span id="fontSizeLabel">16px</span>
+        <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
+      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
+    </dialog>
+
+    <dialog id="profileDialog" class="modal">
+      <h3>Your Profile</h3>
+      <label for="nameInput">Name</label>
+      <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+      <label for="imageInput">Profile Image</label>
+      <input id="imageInput" type="file" accept="image/*" />
+      <div class="profile-preview">
+        <img id="profileImage" alt="Profile preview" />
+        <strong id="profileName">Pilot</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfileBtn" class="save-btn">Save Profile</button>
+        <button class="close-btn" data-close="profileDialog">Close</button>
+      </div>
+    </dialog>
+
+    <main class="topic-main">
+      <article class="topic-card">
+        <h1>Drones</h1>
+        <p>
+          Drones are compact aircraft that use sensors, processors, and electric motors to fly with precision.
+          They are used for mapping, photography, inspections, and search operations, where stable control,
+          reliable communication links, and battery management are essential for safe and effective flights.
+        </p>
+
+        <figure class="topic-image">
+          <img
+            src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1000&q=80&auto=format"
+            alt="A drone flying in the sky"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://picsum.photos/seed/drone/1000/500'"
+          />
+          <figcaption>Photo: Unsplash — quadcopter drone</figcaption>
+        </figure>
+
+        <section class="build-steps">
+          <h2>Build Your Own Quadcopter Drone</h2>
+          <ol>
+            <li><strong>Choose a frame</strong> — pick a 250 mm or 450 mm quadcopter frame kit; larger frames are more stable for beginners and easier to solder.</li>
+            <li><strong>Mount the motors</strong> — attach four brushless motors (e.g. 2205 2300KV) to the frame arms using the included screws; two will spin clockwise and two counter-clockwise.</li>
+            <li><strong>Install the ESCs</strong> — attach one Electronic Speed Controller to each arm near its motor; solder the three motor wires to the ESC pads (motor direction can be reversed later in software).</li>
+            <li><strong>Connect to the power distribution board</strong> — solder each ESC's positive and negative power leads to the central PDB; also solder your battery connector (XT60) to the PDB input.</li>
+            <li><strong>Mount the flight controller</strong> — place the flight controller (e.g. Betaflight F4) at the centre of the frame on anti-vibration standoffs; connect each ESC signal wire to the corresponding motor output.</li>
+            <li><strong>Bind the radio system</strong> — plug a compatible RC receiver into the flight controller's UART port; power on your transmitter and bind the two together following the manufacturer's guide.</li>
+            <li><strong>Configure the firmware</strong> — connect the drone to a PC via USB and open Betaflight Configurator; set motor direction, calibrate the accelerometer, and configure your transmitter channels.</li>
+            <li><strong>Attach propellers and fly</strong> — install two CW and two CCW propellers on the matching motors; do a bench test without props first to confirm motor spin direction, then take your first hover in an open area at low throttle.</li>
+          </ol>
+        </section>
+      </article>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>

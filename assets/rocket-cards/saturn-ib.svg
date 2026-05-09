@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Saturn IB rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8aa8c6"/><stop offset="1" stop-color="#2f475d"/></linearGradient>
+    <radialGradient id="sun" cx="51%" cy="22%" r="25%"><stop offset="0" stop-color="#fff7d1"/><stop offset="0.42" stop-color="#ffd87a"/><stop offset="1" stop-color="rgba(255,216,122,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 230)">
+    <path d="M0 -154 L18 -118 L18 68 L48 100 L48 120 L18 100 L-18 100 L-48 120 L-48 100 L-18 68 L-18 -118 Z" fill="#f7f8fa"/>
+    <rect x="-8" y="-112" width="16" height="160" fill="#0d1721"/>
+    <rect x="-8" y="-92" width="16" height="14" fill="#f7f8fa"/>
+    <rect x="-8" y="-62" width="16" height="14" fill="#f7f8fa"/>
+    <rect x="-8" y="-32" width="16" height="14" fill="#f7f8fa"/>
+    <path d="M-12 120 L0 166 L12 120 Z" fill="#ff9942"/>
+  </g>
+  <text x="24" y="390" fill="#f2f6fa" font-size="44" font-family="Orbitron, Arial, sans-serif" font-weight="700">SATURN IB</text>
+</svg>

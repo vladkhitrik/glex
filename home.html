@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e6fa8" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
+    <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
+    <title>Glex | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="earth-home">
+    <div class="sky-bg" aria-hidden="true"></div>
+    <div class="blueprint-overlay" aria-hidden="true">
+      <svg viewBox="0 0 1200 700" class="blueprint-svg" role="img" aria-label="Rocket blueprint">
+        <defs>
+          <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(8,70,120,0.12)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="1200" height="700" fill="url(#grid)"/>
+        <g stroke="rgba(8,70,120,0.35)" fill="none" stroke-width="2">
+          <path d="M600 80 C556 124 536 200 536 300 C536 400 564 460 600 490 C636 460 664 400 664 300 C664 200 644 124 600 80Z"/>
+          <path d="M600 80 C584 100 576 130 576 155 C576 180 588 194 600 198 C612 194 624 180 624 155 C624 130 616 100 600 80Z" stroke-width="1.2"/>
+          <circle cx="600" cy="260" r="20"/>
+          <circle cx="600" cy="260" r="12" stroke-width="1"/>
+          <path d="M536 370 L472 430 L472 478 L536 448"/>
+          <line x1="472" y1="430" x2="536" y2="410" stroke-width="1"/>
+          <path d="M664 370 L728 430 L728 478 L664 448"/>
+          <line x1="728" y1="430" x2="664" y2="410" stroke-width="1"/>
+          <path d="M570 488 L560 510 L640 510 L630 488Z"/>
+          <ellipse cx="600" cy="510" rx="40" ry="8"/>
+          <line x1="460" y1="80" x2="460" y2="490" stroke-dasharray="6,4" stroke-width="1"/>
+          <line x1="450" y1="80" x2="470" y2="80" stroke-width="1"/>
+          <line x1="450" y1="490" x2="470" y2="490" stroke-width="1"/>
+          <line x1="536" y1="60" x2="664" y2="60" stroke-dasharray="6,4" stroke-width="1"/>
+          <line x1="536" y1="52" x2="536" y2="68" stroke-width="1"/>
+          <line x1="664" y1="52" x2="664" y2="68" stroke-width="1"/>
+          <line x1="536" y1="340" x2="664" y2="340" stroke-dasharray="8,4" stroke-width="1.5"/>
+          <line x1="548" y1="300" x2="652" y2="300" stroke-dasharray="4,3" stroke-width="1"/>
+          <line x1="548" y1="320" x2="652" y2="320" stroke-dasharray="4,3" stroke-width="1"/>
+        </g>
+        <g fill="rgba(8,70,120,0.55)" font-family="monospace" font-size="13">
+          <text x="480" y="290">410cm</text>
+          <text x="555" y="52">128cm</text>
+          <text x="680" y="268">PORTHOLE</text>
+          <text x="680" y="342">STAGE SEP.</text>
+          <text x="680" y="444">FIN ASSEMBLY</text>
+          <text x="680" y="514">ENGINE BELL</text>
+          <text x="30" y="40" font-size="22" font-weight="bold">NASA SLS - BLUEPRINT</text>
+          <text x="30" y="62" font-size="11">SCALE 1:400 - GLEX REFERENCE</text>
+        </g>
+      </svg>
+    </div>
+
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-stack">
+          <div class="brand">GLEX</div>
+          <div class="brand-tagline">Experience the Air</div>
+        </div>
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
+          <img id="headerProfileImage" class="header-avatar" alt="Profile" />
+          <span id="headerProfileName" class="header-name">Pilot</span>
+        </a>
+      </div>
+      <nav class="toolbar" aria-label="Main toolbar">
+        <button class="toolbar-btn" data-action="learn">Rockets</button>
+        <button class="toolbar-btn" data-action="boats">Boats</button>
+        <button class="toolbar-btn" data-action="drones">Drones</button>
+        <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="profile">Profile</button>
+        <button class="toolbar-btn" data-action="settings">Settings</button>
+      </nav>
+      <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Build. Sail. Fly.</h1>
+        <p>
+          Glex is your launchpad to explore rockets, boats, and drones in one futuristic web experience.
+        </p>
+      </section>
+
+      <section id="contentPanels" class="content-grid">
+        <a id="panel-rockets" class="panel panel-link active" href="rockets.html" aria-label="Open rockets page">
+          <h2>Rockets</h2>
+          <p>Discover engines, launch stages, orbit goals, and real mission profiles.</p>
+        </a>
+        <a id="panel-boats" class="panel panel-link" href="boats.html" aria-label="Open boats page">
+          <h2>Boats</h2>
+          <p>Explore hull designs, propulsion systems, navigation basics, and sea safety.</p>
+        </a>
+        <a id="panel-drones" class="panel panel-link" href="drones.html" aria-label="Open drones page">
+          <h2>Drones</h2>
+          <p>Learn about flight control, camera payloads, range optimization, and legal flight zones.</p>
+        </a>
+      </section>
+
+      <section class="fun-facts-section">
+        <h2 class="fun-facts-heading">Fun Facts</h2>
+
+        <div class="fun-facts-group">
+          <h3 class="facts-category facts-rockets">Rockets</h3>
+          <ul class="facts-list">
+            <li>The Saturn V rocket, used for the Apollo missions, is still the most powerful rocket ever launched and produced 7.6 million pounds of thrust at liftoff.</li>
+            <li>Rocket fuel can reach temperatures above 3,300 C (6,000 F), hotter than the surface of the Sun.</li>
+            <li>The first liquid-fuelled rocket was launched by Robert Goddard in 1926. It only flew for 2.5 seconds and reached 12 metres high.</li>
+            <li>SpaceX's Falcon 9 booster can land itself back on a drone ship at sea, allowing it to be reused many times.</li>
+            <li>Rockets do not push against air, they work in the vacuum of space by ejecting gas in one direction and moving in the opposite direction.</li>
+            <li>The sound of a rocket launch is so loud that NASA sprays large water volumes on launchpads to absorb sound energy.</li>
+          </ul>
+        </div>
+
+        <div class="fun-facts-group">
+          <h3 class="facts-category facts-boats">Boats</h3>
+          <ul class="facts-list">
+            <li>The world's largest container ships are around 400 metres long, longer than four football pitches end to end.</li>
+            <li>Wooden boats have been used for over 10,000 years.</li>
+            <li>A ship floating in saltwater sits slightly higher than in freshwater because saltwater is denser.</li>
+            <li>The fastest boat ever recorded was Spirit of Australia in 1978, reaching 511 km/h.</li>
+            <li>Icebreaker ships have rounded hulls so they can ride up and crack ice with their weight.</li>
+            <li>The Titanic's anchor chain links were each roughly the weight of a small car.</li>
+          </ul>
+        </div>
+
+        <div class="fun-facts-group">
+          <h3 class="facts-category facts-drones">Drones</h3>
+          <ul class="facts-list">
+            <li>NASA's Ingenuity helicopter on Mars was the first powered aircraft to fly on another planet.</li>
+            <li>Some high-performance consumer drones can exceed 290 km/h.</li>
+            <li>Drones are used for tree planting in reforestation projects.</li>
+            <li>A drone's propellers often spin around 8,000 to 10,000 RPM.</li>
+            <li>Long-endurance drones can fly for more than 30 hours continuously.</li>
+            <li>Package delivery drones are already used commercially in selected regions.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="nasa-archive-section" aria-labelledby="nasaArchiveHeading">
+        <h2 id="nasaArchiveHeading" class="fun-facts-heading">NASA Rocket Archive</h2>
+        <p class="archive-subtitle">
+          Choose a rocket at the bottom to open facts and a labeled blueprint for that vehicle.
+        </p>
+        <div class="rocket-button-grid">
+          <a class="rocket-archive-btn" href="rocket.html?rocket=mercury-redstone">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Launch_of_Mercury-Redstone_3.jpg/900px-Launch_of_Mercury-Redstone_3.jpg" alt="Mercury Redstone style rocket" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/mercury-redstone.svg'" />
+            <span>Mercury-Redstone</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=atlas-lv3b">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Friendship_7_launch.jpg/900px-Friendship_7_launch.jpg" alt="Atlas LV-3B rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/atlas-lv3b.svg'" />
+            <span>Atlas LV-3B</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=titan-ii-glv">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gemini_6A_liftoff.jpg/900px-Gemini_6A_liftoff.jpg" alt="Titan II GLV rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/titan-ii-glv.svg'" />
+            <span>Titan II GLV</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-i">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Saturn_I_SA-5_launch.jpg/900px-Saturn_I_SA-5_launch.jpg" alt="Saturn I rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-i.svg'" />
+            <span>Saturn I</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-ib">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Apollo_7_launch.jpg/900px-Apollo_7_launch.jpg" alt="Saturn IB rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-ib.svg'" />
+            <span>Saturn IB</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=saturn-v">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Apollo_11_Launch_-_GPN-2000-000630.jpg/900px-Apollo_11_Launch_-_GPN-2000-000630.jpg" alt="Saturn V rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/saturn-v.svg'" />
+            <span>Saturn V</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=space-shuttle">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/STS120LaunchHiRes-edit1.jpg/900px-STS120LaunchHiRes-edit1.jpg" alt="Space Shuttle launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/space-shuttle-stack.svg'" />
+            <span>Space Shuttle Stack</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=ares-i-x">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Ares_I-X_launch.jpg/900px-Ares_I-X_launch.jpg" alt="Ares I-X rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/ares-i-x.svg'" />
+            <span>Ares I-X</span>
+          </a>
+          <a class="rocket-archive-btn" href="rocket.html?rocket=sls-block-1">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Artemis_I_Launch_%28NHQ202211160004%29.jpg/900px-Artemis_I_Launch_%28NHQ202211160004%29.jpg" alt="SLS Block 1 rocket launch" loading="lazy" onerror="this.onerror=null;this.src='assets/rocket-cards/sls-block-1.svg'" />
+            <span>SLS Block 1</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <p class="page-end-note">GLEX for building enthusiasts</p>
+
+    <dialog id="infoDialog" class="modal">
+      <h3>What You Can Do In Glex</h3>
+      <ul>
+        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Read quick learning cards about each technology area.</li>
+        <li>Open Credits to see the creators.</li>
+        <li>Open Profile to set your name and image.</li>
+        <li>Your profile is saved in your browser automatically.</li>
+      </ul>
+      <button class="close-btn" data-close="infoDialog">Close</button>
+    </dialog>
+
+    <dialog id="creditsDialog" class="modal">
+      <h3>Credits</h3>
+      <p><span class="credit-initial">DK</span> Daniil Khitrik and <span class="credit-initial">OR</span> Oscar Rushrook.</p>
+      <button class="close-btn" data-close="creditsDialog">Close</button>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal">
+      <h3>Settings</h3>
+      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
+      <div class="settings-row">
+        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+        <span id="fontSizeLabel">16px</span>
+        <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
+      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
+    </dialog>
+
+    <dialog id="profileDialog" class="modal">
+      <h3>Your Profile</h3>
+      <label for="nameInput">Name</label>
+      <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+      <label for="imageInput">Profile Image</label>
+      <input id="imageInput" type="file" accept="image/*" />
+      <small id="imageStatus" class="image-status">No picture chosen yet</small>
+      <div class="profile-preview">
+        <img id="profileImage" alt="Profile preview" />
+        <strong id="profileName">Pilot</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfileBtn" class="save-btn">Save Profile</button>
+        <button class="close-btn" data-close="profileDialog">Close</button>
+      </div>
+    </dialog>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

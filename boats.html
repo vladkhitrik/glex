@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e6fa8" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
+    <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
+    <title>Glex | Boats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="space-theme">
+    <div class="sky-bg" aria-hidden="true"></div>
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-stack">
+          <div class="brand">GLEX</div>
+          <div class="brand-tagline">Experience the Air</div>
+        </div>
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
+          <img id="headerProfileImage" class="header-avatar" alt="Profile" />
+          <span id="headerProfileName" class="header-name">Pilot</span>
+        </a>
+      </div>
+      <nav class="toolbar" aria-label="Main toolbar">
+        <a class="toolbar-btn" href="home.html">Home</a>
+        <a class="toolbar-btn" href="rockets.html">Rockets</a>
+        <a class="toolbar-btn" href="boats.html">Boats</a>
+        <a class="toolbar-btn" href="drones.html">Drones</a>
+        <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="profile">Profile</button>
+        <button class="toolbar-btn" data-action="settings">Settings</button>
+      </nav>
+      <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
+    </header>
+
+    <dialog id="infoDialog" class="modal">
+      <h3>What You Can Do In Glex</h3>
+      <ul>
+        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Read quick learning cards about each technology area.</li>
+        <li>Open Credits to see the creators.</li>
+        <li>Open Profile to set your name and image.</li>
+        <li>Your profile is saved in your browser automatically.</li>
+      </ul>
+      <button class="close-btn" data-close="infoDialog">Close</button>
+    </dialog>
+
+    <dialog id="creditsDialog" class="modal">
+      <h3>Credits</h3>
+      <p><span class="credit-initial">DK</span> Daniil Khitrik and <span class="credit-initial">OR</span> Oscar Rushrook.</p>
+      <button class="close-btn" data-close="creditsDialog">Close</button>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal">
+      <h3>Settings</h3>
+      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
+      <div class="settings-row">
+        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+        <span id="fontSizeLabel">16px</span>
+        <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
+      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
+    </dialog>
+
+    <dialog id="profileDialog" class="modal">
+      <h3>Your Profile</h3>
+      <label for="nameInput">Name</label>
+      <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+      <label for="imageInput">Profile Image</label>
+      <input id="imageInput" type="file" accept="image/*" />
+      <div class="profile-preview">
+        <img id="profileImage" alt="Profile preview" />
+        <strong id="profileName">Pilot</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfileBtn" class="save-btn">Save Profile</button>
+        <button class="close-btn" data-close="profileDialog">Close</button>
+      </div>
+    </dialog>
+
+    <main class="topic-main">
+      <article class="topic-card">
+        <h1>Boats</h1>
+        <p>
+          Boats are engineered to travel efficiently through water by balancing buoyancy, hull shape, and propulsion.
+          From small electric craft to large ocean vessels, designers optimize stability, fuel usage, and safety systems
+          so people and cargo can move reliably across rivers, lakes, and open seas.
+        </p>
+
+        <figure class="topic-image">
+          <img
+            src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=1000&q=80&auto=format"
+            alt="A boat sailing on open water"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://picsum.photos/seed/boat/1000/500'"
+          />
+          <figcaption>Photo: Unsplash — sailing boat</figcaption>
+        </figure>
+
+        <section class="build-steps">
+          <h2>Build Your Own Model Boat</h2>
+          <ol>
+            <li><strong>Design your hull</strong> — decide on a flat-bottom, V-hull, or pontoon layout; sketch it on paper and transfer the outline to a balsa or foam sheet.</li>
+            <li><strong>Cut and shape the hull</strong> — use a craft knife or jigsaw to cut the hull shape; carve the bow to a point and sand all surfaces smooth.</li>
+            <li><strong>Seal the hull</strong> — apply two coats of waterproof wood sealant or fibreglass resin to prevent water absorption; let dry completely between coats.</li>
+            <li><strong>Attach the keel and rudder</strong> — glue a thin strip of wood along the bottom centreline for the keel; mount a small hinged rudder at the stern using a metal pin or screw.</li>
+            <li><strong>Install the motor and propeller shaft</strong> — drill a small hole through the stern, pass the propeller shaft through a brass tube, and mount the DC motor inside; seal the shaft hole with marine epoxy.</li>
+            <li><strong>Wire the electronics</strong> — connect the motor to a small ESC or switch, add a waterproofed battery compartment, and run servo wires to the rudder.</li>
+            <li><strong>Install radio control</strong> — fit a small RC receiver and bind it to your transmitter; link the steering channel to the rudder servo.</li>
+            <li><strong>Water test and tune</strong> — float the boat in a calm pool, check for leaks, adjust ballast (small weights) until it sits level, and fine-tune rudder throw.</li>
+          </ol>
+        </section>
+      </article>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>

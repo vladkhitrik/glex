@@ -1,0 +1,16 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Mercury-Redstone rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b88b5"/><stop offset="1" stop-color="#1f3552"/></linearGradient>
+    <radialGradient id="sun" cx="50%" cy="24%" r="24%"><stop offset="0" stop-color="#fff6c7"/><stop offset="0.45" stop-color="#ffd37a"/><stop offset="1" stop-color="rgba(255,211,122,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 228)">
+    <path d="M0 -150 L18 -112 L18 60 L48 95 L48 115 L18 95 L-18 95 L-48 115 L-48 95 L-18 60 L-18 -112 Z" fill="#e9edf5"/>
+    <rect x="-7" y="-76" width="14" height="72" fill="#c0181f"/>
+    <rect x="-7" y="-4" width="14" height="50" fill="#f6f7fb"/>
+    <circle cx="0" cy="-30" r="8" fill="#0f2d46"/>
+    <path d="M-12 115 L0 160 L12 115 Z" fill="#ff9748"/>
+  </g>
+  <text x="24" y="390" fill="#f0f4fa" font-size="38" font-family="Orbitron, Arial, sans-serif" font-weight="700">MERCURY-REDSTONE</text>
+</svg>

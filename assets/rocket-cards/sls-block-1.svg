@@ -1,0 +1,16 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="SLS Block 1 rocket card">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ca3b8"/><stop offset="1" stop-color="#2a3f53"/></linearGradient>
+    <radialGradient id="sun" cx="50%" cy="21%" r="27%"><stop offset="0" stop-color="#fff8d8"/><stop offset="0.42" stop-color="#ffd983"/><stop offset="1" stop-color="rgba(255,217,131,0)"/></radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <rect width="800" height="420" fill="url(#sun)"/>
+  <g transform="translate(400 232)">
+    <rect x="-14" y="-132" width="28" height="164" rx="14" fill="#d88b42"/>
+    <rect x="-42" y="-120" width="12" height="144" fill="#eff2f8"/>
+    <rect x="30" y="-120" width="12" height="144" fill="#eff2f8"/>
+    <rect x="-8" y="-98" width="16" height="96" fill="#f6f8fb"/>
+    <path d="M-16 124 L0 176 L16 124 Z" fill="#ff9941"/>
+  </g>
+  <text x="24" y="390" fill="#f3f6fb" font-size="42" font-family="Orbitron, Arial, sans-serif" font-weight="700">SLS BLOCK 1</text>
+</svg>

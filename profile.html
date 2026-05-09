@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e6fa8" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
+    <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
+    <title>Glex | Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="space-theme">
+    <div class="sky-bg" aria-hidden="true"></div>
+
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-stack">
+          <div class="brand">GLEX</div>
+          <div class="brand-tagline">Experience the Air</div>
+        </div>
+        <a class="header-profile" href="profile.html" aria-label="Profile page">
+          <img id="headerProfileImage" class="header-avatar" alt="Profile" />
+          <span id="headerProfileName" class="header-name">Pilot</span>
+        </a>
+      </div>
+      <nav class="toolbar" aria-label="Main toolbar">
+        <a class="toolbar-btn" href="home.html">Home</a>
+        <a class="toolbar-btn" href="rockets.html">Rockets</a>
+        <a class="toolbar-btn" href="boats.html">Boats</a>
+        <a class="toolbar-btn" href="drones.html">Drones</a>
+        <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="settings">Settings</button>
+      </nav>
+      <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
+    </header>
+
+    <dialog id="infoDialog" class="modal">
+      <h3>What You Can Do In Glex</h3>
+      <ul>
+        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Read quick learning cards about each technology area.</li>
+        <li>Open Credits to see the creators.</li>
+        <li>Open Profile to set your name and image.</li>
+        <li>Your profile is saved in your browser automatically.</li>
+      </ul>
+      <button class="close-btn" data-close="infoDialog">Close</button>
+    </dialog>
+
+    <dialog id="creditsDialog" class="modal">
+      <h3>Credits</h3>
+      <p><span class="credit-initial">DK</span> Daniil Khitrik and <span class="credit-initial">OR</span> Oscar Rushrook.</p>
+      <button class="close-btn" data-close="creditsDialog">Close</button>
+    </dialog>
+
+    <dialog id="settingsDialog" class="modal">
+      <h3>Settings</h3>
+      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
+      <div class="settings-row">
+        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+        <span id="fontSizeLabel">16px</span>
+        <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
+      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
+    </dialog>
+
+    <main class="topic-main">
+      <article class="topic-card profile-page-card">
+        <h1>Your Profile</h1>
+
+        <div class="profile-page-display">
+          <div class="profile-page-avatar-wrap">
+            <img id="profilePageImage" class="profile-page-avatar" alt="Your profile picture" />
+          </div>
+          <div class="profile-page-info">
+            <p class="profile-page-name" id="profilePageName">Pilot</p>
+            <p class="profile-page-sub">Glex Explorer</p>
+          </div>
+        </div>
+
+        <hr class="profile-divider" />
+
+        <form class="profile-form" id="profileForm">
+          <div class="profile-form-field">
+            <label for="nameInput">Username</label>
+            <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+          </div>
+
+          <div class="profile-form-field">
+            <label for="imageInput">Profile Image</label>
+            <input id="imageInput" type="file" accept="image/*" />
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="saveProfileBtn" class="save-btn">Save Profile</button>
+          </div>
+        </form>
+      </article>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
