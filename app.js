@@ -60,169 +60,17 @@ if (isReload && !onLandingPage) {
   window.location.replace("index.html");
 }
 
+const mkRocket = (name, intro, facts, parts) => ({ name, intro, facts, parts });
 const NASA_ROCKETS = {
-  "mercury-redstone": {
-    name: "Mercury-Redstone",
-    intro: "Mercury-Redstone launched the first US crewed suborbital missions in 1961, proving life-support and launch escape systems under real flight conditions.",
-    facts: [
-      "First crewed launch: Mercury-Redstone 3 (Freedom 7), 5 May 1961.",
-      "Height: about 25.4 m.",
-      "Single-stage liquid-fuel rocket adapted from a military Redstone missile.",
-      "Carried Alan Shepard and Gus Grissom on suborbital flights.",
-      "Set the baseline for later orbital Mercury missions."
-    ],
-    parts: [
-      "Escape tower and capsule",
-      "Instrument compartment",
-      "Liquid oxygen and alcohol tanks",
-      "Tail section and guidance fins",
-      "A-7 engine section"
-    ]
-  },
-  "atlas-lv3b": {
-    name: "Atlas LV-3B",
-    intro: "Atlas LV-3B launched Project Mercury orbital flights and became NASA's first operational crewed orbital launcher.",
-    facts: [
-      "First US crewed orbital launch vehicle.",
-      "Used for Mercury-Atlas missions including John Glenn's Friendship 7.",
-      "Stage-and-a-half design with booster and sustainer engines.",
-      "Approximate height: 29 m.",
-      "Introduced high-energy ascent profiles for orbital insertion."
-    ],
-    parts: [
-      "Mercury capsule and escape system",
-      "Pressurized thin-wall tank structure",
-      "RP-1 and liquid oxygen propellant tanks",
-      "Booster engine skirt and jettison section",
-      "Sustainer and vernier engine cluster"
-    ]
-  },
-  "titan-ii-glv": {
-    name: "Titan II GLV",
-    intro: "Titan II GLV carried Gemini crews into orbit and enabled rendezvous, EVA, and long-duration flight techniques used for Apollo.",
-    facts: [
-      "Launch vehicle for all Gemini crewed missions.",
-      "Two-stage rocket using hypergolic propellants.",
-      "Height: roughly 33 m.",
-      "Supported critical orbital rendezvous and docking practice.",
-      "Modified guidance and vibration damping for crew safety."
-    ],
-    parts: [
-      "Gemini spacecraft and adapter",
-      "Inertial guidance and instrument unit",
-      "First-stage fuel and oxidizer tanks",
-      "Interstage and second-stage tank section",
-      "Dual engine propulsion section"
-    ]
-  },
-  "saturn-i": {
-    name: "Saturn I",
-    intro: "Saturn I was NASA's first heavy-lift rocket family and validated clustered engines and upper-stage operations before Apollo.",
-    facts: [
-      "First flown in 1961 as part of Apollo program buildup.",
-      "Used clustered first-stage tanks and eight H-1 engines.",
-      "Height: around 55 m.",
-      "Demonstrated large-payload launch capabilities.",
-      "Bridge design between early test vehicles and Saturn IB/V."
-    ],
-    parts: [
-      "Apollo boilerplate/payload adapter",
-      "S-IV upper stage",
-      "S-I first-stage tank cluster",
-      "Interstage and control instrumentation",
-      "Eight-engine thrust structure"
-    ]
-  },
-  "saturn-ib": {
-    name: "Saturn IB",
-    intro: "Saturn IB launched early Apollo Earth-orbit missions and later sent crews to Skylab during the 1970s.",
-    facts: [
-      "Carried Apollo 7 and Skylab crewed missions.",
-      "First stage: S-IB with eight H-1 engines.",
-      "Second stage: S-IVB with a single J-2 engine.",
-      "Height: about 68 m.",
-      "Delivered crewed spacecraft to low Earth orbit."
-    ],
-    parts: [
-      "Apollo command-service spacecraft",
-      "Instrument unit and guidance ring",
-      "S-IVB liquid hydrogen/oxygen stage",
-      "S-IB clustered first stage",
-      "Engine and aft skirt section"
-    ]
-  },
-  "saturn-v": {
-    name: "Saturn V",
-    intro: "Saturn V powered Apollo lunar missions and remains one of the most powerful operational launch vehicles ever flown.",
-    facts: [
-      "Height: about 110.6 m.",
-      "Total thrust at liftoff: roughly 7.6 million pounds-force.",
-      "Launched Apollo crews to the Moon from 1968 to 1972.",
-      "Three-stage architecture: S-IC, S-II, and S-IVB.",
-      "Also launched Skylab in 1973."
-    ],
-    parts: [
-      "Apollo spacecraft and launch escape tower",
-      "S-IVB third stage",
-      "S-II second stage",
-      "Interstage and avionics instrumentation",
-      "S-IC first stage with five F-1 engines"
-    ]
-  },
-  "space-shuttle": {
-    name: "Space Shuttle Stack",
-    intro: "NASA's Space Shuttle stack combined an orbiter, external tank, and solid boosters for reusable crew and cargo missions to low Earth orbit.",
-    facts: [
-      "Operational period: 1981 to 2011.",
-      "Stack included orbiter, external tank, and two SRBs.",
-      "Delivered and serviced payloads including ISS modules and Hubble missions.",
-      "SRBs were recovered and refurbished after launch.",
-      "Main engines burned liquid hydrogen and oxygen from the external tank."
-    ],
-    parts: [
-      "Orbiter nose and payload bay",
-      "Crew module and avionics deck",
-      "External tank (LH2/LOX)",
-      "Twin solid rocket boosters",
-      "Orbiter main engine cluster"
-    ]
-  },
-  "ares-i-x": {
-    name: "Ares I-X",
-    intro: "Ares I-X was a 2009 NASA test flight that validated aerodynamics and control concepts for the planned Constellation crew launcher.",
-    facts: [
-      "Single developmental test flight in October 2009.",
-      "Used a four-segment SRB first stage with simulator hardware above.",
-      "Collected high-value ascent and loads data.",
-      "Approximate vehicle height: 99.6 m.",
-      "Provided guidance for later SLS-era engineering tradeoffs."
-    ],
-    parts: [
-      "Crew module and launch abort simulator",
-      "Upper stage simulator",
-      "Avionics and roll-control section",
-      "Interstage adapter hardware",
-      "First-stage solid rocket motor"
-    ]
-  },
-  "sls-block-1": {
-    name: "SLS Block 1",
-    intro: "Space Launch System Block 1 is NASA's current deep-space launch vehicle family used for Artemis missions beyond low Earth orbit.",
-    facts: [
-      "First launch: Artemis I in November 2022.",
-      "Core stage uses four RS-25 engines.",
-      "Two five-segment solid rocket boosters provide most liftoff thrust.",
-      "Upper stage for Block 1 is the Interim Cryogenic Propulsion Stage.",
-      "Designed for Orion missions to lunar and deep-space trajectories."
-    ],
-    parts: [
-      "Orion spacecraft and launch abort system",
-      "Interim Cryogenic Propulsion Stage",
-      "Core stage liquid hydrogen and oxygen tanks",
-      "Twin five-segment solid boosters",
-      "RS-25 engine section and aft skirt"
-    ]
-  }
+  "mercury-redstone": mkRocket("Mercury-Redstone", "Mercury-Redstone launched the first US crewed suborbital missions in 1961, proving life-support and launch escape systems under real flight conditions.", ["First crewed launch: Mercury-Redstone 3 (Freedom 7), 5 May 1961.", "Height: about 25.4 m.", "Single-stage liquid-fuel rocket adapted from a military Redstone missile.", "Carried Alan Shepard and Gus Grissom on suborbital flights.", "Set the baseline for later orbital Mercury missions."], ["Escape tower and capsule", "Instrument compartment", "Liquid oxygen and alcohol tanks", "Tail section and guidance fins", "A-7 engine section"]),
+  "atlas-lv3b": mkRocket("Atlas LV-3B", "Atlas LV-3B launched Project Mercury orbital flights and became NASA's first operational crewed orbital launcher.", ["First US crewed orbital launch vehicle.", "Used for Mercury-Atlas missions including John Glenn's Friendship 7.", "Stage-and-a-half design with booster and sustainer engines.", "Approximate height: 29 m.", "Introduced high-energy ascent profiles for orbital insertion."], ["Mercury capsule and escape system", "Pressurized thin-wall tank structure", "RP-1 and liquid oxygen propellant tanks", "Booster engine skirt and jettison section", "Sustainer and vernier engine cluster"]),
+  "titan-ii-glv": mkRocket("Titan II GLV", "Titan II GLV carried Gemini crews into orbit and enabled rendezvous, EVA, and long-duration flight techniques used for Apollo.", ["Launch vehicle for all Gemini crewed missions.", "Two-stage rocket using hypergolic propellants.", "Height: roughly 33 m.", "Supported critical orbital rendezvous and docking practice.", "Modified guidance and vibration damping for crew safety."], ["Gemini spacecraft and adapter", "Inertial guidance and instrument unit", "First-stage fuel and oxidizer tanks", "Interstage and second-stage tank section", "Dual engine propulsion section"]),
+  "saturn-i": mkRocket("Saturn I", "Saturn I was NASA's first heavy-lift rocket family and validated clustered engines and upper-stage operations before Apollo.", ["First flown in 1961 as part of Apollo program buildup.", "Used clustered first-stage tanks and eight H-1 engines.", "Height: around 55 m.", "Demonstrated large-payload launch capabilities.", "Bridge design between early test vehicles and Saturn IB/V."], ["Apollo boilerplate/payload adapter", "S-IV upper stage", "S-I first-stage tank cluster", "Interstage and control instrumentation", "Eight-engine thrust structure"]),
+  "saturn-ib": mkRocket("Saturn IB", "Saturn IB launched early Apollo Earth-orbit missions and later sent crews to Skylab during the 1970s.", ["Carried Apollo 7 and Skylab crewed missions.", "First stage: S-IB with eight H-1 engines.", "Second stage: S-IVB with a single J-2 engine.", "Height: about 68 m.", "Delivered crewed spacecraft to low Earth orbit."], ["Apollo command-service spacecraft", "Instrument unit and guidance ring", "S-IVB liquid hydrogen/oxygen stage", "S-IB clustered first stage", "Engine and aft skirt section"]),
+  "saturn-v": mkRocket("Saturn V", "Saturn V powered Apollo lunar missions and remains one of the most powerful operational launch vehicles ever flown.", ["Height: about 110.6 m.", "Total thrust at liftoff: roughly 7.6 million pounds-force.", "Launched Apollo crews to the Moon from 1968 to 1972.", "Three-stage architecture: S-IC, S-II, and S-IVB.", "Also launched Skylab in 1973."], ["Apollo spacecraft and launch escape tower", "S-IVB third stage", "S-II second stage", "Interstage and avionics instrumentation", "S-IC first stage with five F-1 engines"]),
+  "space-shuttle": mkRocket("Space Shuttle Stack", "NASA's Space Shuttle stack combined an orbiter, external tank, and solid boosters for reusable crew and cargo missions to low Earth orbit.", ["Operational period: 1981 to 2011.", "Stack included orbiter, external tank, and two SRBs.", "Delivered and serviced payloads including ISS modules and Hubble missions.", "SRBs were recovered and refurbished after launch.", "Main engines burned liquid hydrogen and oxygen from the external tank."], ["Orbiter nose and payload bay", "Crew module and avionics deck", "External tank (LH2/LOX)", "Twin solid rocket boosters", "Orbiter main engine cluster"]),
+  "ares-i-x": mkRocket("Ares I-X", "Ares I-X was a 2009 NASA test flight that validated aerodynamics and control concepts for the planned Constellation crew launcher.", ["Single developmental test flight in October 2009.", "Used a four-segment SRB first stage with simulator hardware above.", "Collected high-value ascent and loads data.", "Approximate vehicle height: 99.6 m.", "Provided guidance for later SLS-era engineering tradeoffs."], ["Crew module and launch abort simulator", "Upper stage simulator", "Avionics and roll-control section", "Interstage adapter hardware", "First-stage solid rocket motor"]),
+  "sls-block-1": mkRocket("SLS Block 1", "Space Launch System Block 1 is NASA's current deep-space launch vehicle family used for Artemis missions beyond low Earth orbit.", ["First launch: Artemis I in November 2022.", "Core stage uses four RS-25 engines.", "Two five-segment solid rocket boosters provide most liftoff thrust.", "Upper stage for Block 1 is the Interim Cryogenic Propulsion Stage.", "Designed for Orion missions to lunar and deep-space trajectories."], ["Orion spacecraft and launch abort system", "Interim Cryogenic Propulsion Stage", "Core stage liquid hydrogen and oxygen tanks", "Twin five-segment solid boosters", "RS-25 engine section and aft skirt"]),
 };
 
 const BLUEPRINT_PRESETS = {
