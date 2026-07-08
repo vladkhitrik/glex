@@ -16,6 +16,7 @@ const saveFontBtn = document.getElementById("saveFontBtn");
 const increaseBrightnessBtn = document.getElementById("increaseBrightnessBtn");
 const decreaseBrightnessBtn = document.getElementById("decreaseBrightnessBtn");
 const brightnessLabel = document.getElementById("brightnessLabel");
+let languageSelect = null;
 let fontSizeSimulation = null;
 
 const DEFAULT_BG = "#d6f0ff";
@@ -24,6 +25,43 @@ const DEFAULT_BRIGHTNESS = 100;
 const MIN_BRIGHTNESS = 60;
 const MAX_BRIGHTNESS = 140;
 const BRIGHTNESS_STEP = 10;
+const DEFAULT_LANGUAGE = "en";
+const LANGUAGE_OPTIONS = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Spanish" },
+  { code: "fr", label: "French" },
+  { code: "de", label: "German" },
+  { code: "it", label: "Italian" },
+  { code: "pt", label: "Portuguese" },
+  { code: "nl", label: "Dutch" },
+  { code: "pl", label: "Polish" },
+  { code: "ru", label: "Russian" },
+  { code: "uk", label: "Ukrainian" },
+  { code: "tr", label: "Turkish" },
+  { code: "ar", label: "Arabic" },
+  { code: "he", label: "Hebrew" },
+  { code: "hi", label: "Hindi" },
+  { code: "bn", label: "Bengali" },
+  { code: "zh-CN", label: "Chinese (Simplified)" },
+  { code: "ja", label: "Japanese" },
+  { code: "ko", label: "Korean" },
+  { code: "th", label: "Thai" },
+  { code: "vi", label: "Vietnamese" },
+  { code: "id", label: "Indonesian" },
+  { code: "ms", label: "Malay" },
+  { code: "fil", label: "Filipino" },
+  { code: "sw", label: "Swahili" },
+  { code: "fa", label: "Persian" },
+  { code: "ur", label: "Urdu" },
+  { code: "el", label: "Greek" },
+  { code: "cs", label: "Czech" },
+  { code: "ro", label: "Romanian" },
+  { code: "sv", label: "Swedish" },
+  { code: "no", label: "Norwegian" },
+  { code: "da", label: "Danish" },
+  { code: "fi", label: "Finnish" },
+  { code: "hu", label: "Hungarian" },
+];
 
 const profileName = document.getElementById("profileName");
 const profileImage = document.getElementById("profileImage");
@@ -492,10 +530,81 @@ function ensureTextSizeSimulation() {
   return marker;
 }
 
+function ensureLanguageControls() {
+  if (!settingsDialog) {
+    return null;
+  }
+
+  const existing = settingsDialog.querySelector("#languageSelect");
+  if (existing) {
+    return existing;
+  }
+
+  const languageLabel = document.createElement("label");
+  languageLabel.setAttribute("for", "languageSelect");
+  languageLabel.className = "language-label";
+  languageLabel.textContent = "Language";
+
+  const languageRow = document.createElement("div");
+  languageRow.className = "settings-row language-controls";
+
+  const select = document.createElement("select");
+  select.id = "languageSelect";
+  select.className = "language-select";
+  select.setAttribute("aria-label", "Choose language");
+
+  LANGUAGE_OPTIONS.forEach((entry) => {
+    const option = document.createElement("option");
+    option.value = entry.code;
+    option.textContent = entry.label;
+    select.appendChild(option);
+  });
+
+  languageRow.appendChild(select);
+
+  const saveButton = settingsDialog.querySelector("#saveFontBtn");
+  if (saveButton) {
+    settingsDialog.insertBefore(languageLabel, saveButton);
+    settingsDialog.insertBefore(languageRow, saveButton);
+  } else {
+    settingsDialog.appendChild(languageLabel);
+    settingsDialog.appendChild(languageRow);
+  }
+
+  return select;
+}
+
+function navigateWithGoogleTranslate(langCode) {
+  if (!langCode || langCode === DEFAULT_LANGUAGE) {
+    return;
+  }
+
+  const translatedUrl = `https://translate.google.com/translate?sl=auto&tl=${encodeURIComponent(langCode)}&u=${encodeURIComponent(window.location.href)}`;
+  window.location.href = translatedUrl;
+}
+
 const savedFont = parseInt(localStorage.getItem("glex.fontSize") || DEFAULT_FONT, 10);
 fontSizeSimulation = ensureTextSizeSimulation();
 applyFontSize(savedFont);
 let currentBrightness = applyBrightness(parseInt(localStorage.getItem("glex.brightness") || DEFAULT_BRIGHTNESS, 10));
+languageSelect = ensureLanguageControls();
+
+const savedLanguage = localStorage.getItem("glex.language") || DEFAULT_LANGUAGE;
+document.documentElement.lang = savedLanguage;
+if (languageSelect) {
+  if ([...languageSelect.options].some((option) => option.value === savedLanguage)) {
+    languageSelect.value = savedLanguage;
+  } else {
+    languageSelect.value = DEFAULT_LANGUAGE;
+  }
+
+  languageSelect.addEventListener("change", () => {
+    const selectedLanguage = languageSelect.value || DEFAULT_LANGUAGE;
+    localStorage.setItem("glex.language", selectedLanguage);
+    document.documentElement.lang = selectedLanguage;
+    navigateWithGoogleTranslate(selectedLanguage);
+  });
+}
 
 let committedFontSize = savedFont;
 let draftFontSize = savedFont;

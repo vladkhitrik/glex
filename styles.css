@@ -186,6 +186,15 @@ body.hide-launch-glow .sky-bg::after {
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
+.toolbar-btn,
+.toolbar-btn:visited,
+.toolbar-btn:hover,
+.toolbar-btn:active,
+.toolbar-btn:focus,
+.toolbar-btn:focus-visible {
+  text-decoration: none;
+}
+
 .toolbar-btn:hover,
 .info-btn:hover,
 .close-btn:hover,
@@ -596,6 +605,34 @@ main {
   cursor: default;
   pointer-events: none;
   min-width: 170px;
+}
+
+.language-label {
+  margin-top: 0.7rem;
+  display: block;
+}
+
+.language-controls {
+  align-items: center;
+}
+
+.language-select {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(8, 63, 104, 0.2);
+  padding: 0.45rem 0.6rem;
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 236, 255, 0.85) 100%);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.space-theme .language-select,
+.earth-home .language-select {
+  color: #eaf3ff;
+  border-color: rgba(200, 220, 255, 0.24);
+  background: linear-gradient(180deg, rgba(26, 44, 76, 0.92) 0%, rgba(10, 22, 42, 0.92) 100%);
 }
 
 #bgColorInput {
