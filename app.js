@@ -535,8 +535,26 @@ function ensureLanguageControls() {
     return null;
   }
 
+  const populateLanguageOptions = (selectEl) => {
+    if (!selectEl) {
+      return;
+    }
+
+    if (selectEl.options.length) {
+      return;
+    }
+
+    LANGUAGE_OPTIONS.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = entry.code;
+      option.textContent = entry.label;
+      selectEl.appendChild(option);
+    });
+  };
+
   const existing = settingsDialog.querySelector("#languageSelect");
   if (existing) {
+    populateLanguageOptions(existing);
     return existing;
   }
 
@@ -552,13 +570,7 @@ function ensureLanguageControls() {
   select.id = "languageSelect";
   select.className = "language-select";
   select.setAttribute("aria-label", "Choose language");
-
-  LANGUAGE_OPTIONS.forEach((entry) => {
-    const option = document.createElement("option");
-    option.value = entry.code;
-    option.textContent = entry.label;
-    select.appendChild(option);
-  });
+  populateLanguageOptions(select);
 
   languageRow.appendChild(select);
 
