@@ -75,6 +75,7 @@
         <button class="toolbar-btn" data-action="learn">Rockets</button>
         <button class="toolbar-btn" data-action="boats">Boats</button>
         <button class="toolbar-btn" data-action="drones">Drones</button>
+        <button class="toolbar-btn" data-action="planes">Planes</button>
         <button class="toolbar-btn" data-action="credits">Credits</button>
         <button class="toolbar-btn" data-action="profile">Profile</button>
         <button class="toolbar-btn" data-action="settings">Settings</button>
@@ -86,7 +87,7 @@
       <section class="hero">
         <h1>Build. Sail. Fly.</h1>
         <p>
-          Glex is your launchpad to explore rockets, boats, and drones in one futuristic web experience.
+          Glex is your launchpad to explore rockets, boats, drones, and planes in one futuristic web experience.
         </p>
       </section>
 
@@ -102,6 +103,10 @@
         <a id="panel-drones" class="panel panel-link" href="drones.html" aria-label="Open drones page">
           <h2>Drones</h2>
           <p>Learn about flight control, camera payloads, range optimization, and legal flight zones.</p>
+        </a>
+        <a id="panel-planes" class="panel panel-link" href="planes.html" aria-label="Open planes page">
+          <h2>Planes</h2>
+          <p>Understand lift, wings, engines, flight instruments, and how pilots operate aircraft safely.</p>
         </a>
       </section>
 
@@ -196,7 +201,7 @@
     <dialog id="infoDialog" class="modal">
       <h3>What You Can Do In Glex</h3>
       <ul>
-        <li>Switch between rockets, boats, and drones topics.</li>
+        <li>Switch between rockets, boats, drones, and planes topics.</li>
         <li>Read quick learning cards about each technology area.</li>
         <li>Open Credits to see the creators.</li>
         <li>Open Profile to set your name and image.</li>
@@ -218,6 +223,13 @@
         <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
         <span id="fontSizeLabel">16px</span>
         <button class="save-btn" id="resetFontBtn">Reset</button>
+      </div>
+      <label for="increaseBrightnessBtn" style="margin-top:0.7rem;display:block">Screen Brightness</label>
+      <div class="settings-row brightness-controls">
+        <button class="save-btn" id="decreaseBrightnessBtn" type="button" aria-label="Decrease screen brightness">-</button>
+        <button class="save-btn brightness-title" type="button" aria-label="Screen Brightness" disabled>Screen Brightness</button>
+        <button class="save-btn" id="increaseBrightnessBtn" type="button" aria-label="Increase screen brightness">+</button>
+        <span id="brightnessLabel">100%</span>
       </div>
       <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
       <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>

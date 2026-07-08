@@ -13,10 +13,17 @@ const fontSizeInput = document.getElementById("fontSizeInput");
 const fontSizeLabel = document.getElementById("fontSizeLabel");
 const resetFontBtn = document.getElementById("resetFontBtn");
 const saveFontBtn = document.getElementById("saveFontBtn");
+const increaseBrightnessBtn = document.getElementById("increaseBrightnessBtn");
+const decreaseBrightnessBtn = document.getElementById("decreaseBrightnessBtn");
+const brightnessLabel = document.getElementById("brightnessLabel");
 let fontSizeSimulation = null;
 
 const DEFAULT_BG = "#d6f0ff";
 const DEFAULT_FONT = 16;
+const DEFAULT_BRIGHTNESS = 100;
+const MIN_BRIGHTNESS = 60;
+const MAX_BRIGHTNESS = 140;
+const BRIGHTNESS_STEP = 10;
 
 const profileName = document.getElementById("profileName");
 const profileImage = document.getElementById("profileImage");
@@ -206,7 +213,8 @@ function setActivePanel(section) {
   const panelMap = {
     learn: "panel-rockets",
     boats: "panel-boats",
-    drones: "panel-drones"
+    drones: "panel-drones",
+    planes: "panel-planes"
   };
 
   const targetId = panelMap[section] || "panel-rockets";
@@ -231,11 +239,12 @@ function scrollToPanels() {
 }
 
 function runAction(action) {
-  if (action === "learn" || action === "boats" || action === "drones") {
+  if (action === "learn" || action === "boats" || action === "drones" || action === "planes") {
     const pageMap = {
       learn: "rockets.html",
       boats: "boats.html",
-      drones: "drones.html"
+      drones: "drones.html",
+      planes: "planes.html"
     };
 
     window.location.href = pageMap[action] || "rockets.html";
@@ -456,6 +465,14 @@ function applyFontSize(size) {
   }
 }
 
+function applyBrightness(level) {
+  const boundedLevel = Math.min(MAX_BRIGHTNESS, Math.max(MIN_BRIGHTNESS, level));
+  const brightnessScale = (boundedLevel / 100).toFixed(2);
+  document.documentElement.style.setProperty("--glex-brightness", brightnessScale);
+  if (brightnessLabel) brightnessLabel.textContent = `${boundedLevel}%`;
+  return boundedLevel;
+}
+
 function ensureTextSizeSimulation() {
   if (!settingsDialog) {
     return null;
@@ -478,6 +495,7 @@ function ensureTextSizeSimulation() {
 const savedFont = parseInt(localStorage.getItem("glex.fontSize") || DEFAULT_FONT, 10);
 fontSizeSimulation = ensureTextSizeSimulation();
 applyFontSize(savedFont);
+let currentBrightness = applyBrightness(parseInt(localStorage.getItem("glex.brightness") || DEFAULT_BRIGHTNESS, 10));
 
 let committedFontSize = savedFont;
 let draftFontSize = savedFont;
@@ -519,6 +537,20 @@ if (saveFontBtn) {
     }
     applyFontSize(committedFontSize);
     window.location.href = "home.html";
+  });
+}
+
+if (increaseBrightnessBtn) {
+  increaseBrightnessBtn.addEventListener("click", () => {
+    currentBrightness = applyBrightness(currentBrightness + BRIGHTNESS_STEP);
+    localStorage.setItem("glex.brightness", String(currentBrightness));
+  });
+}
+
+if (decreaseBrightnessBtn) {
+  decreaseBrightnessBtn.addEventListener("click", () => {
+    currentBrightness = applyBrightness(currentBrightness - BRIGHTNESS_STEP);
+    localStorage.setItem("glex.brightness", String(currentBrightness));
   });
 }
 

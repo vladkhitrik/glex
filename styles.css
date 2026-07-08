@@ -2,6 +2,7 @@
   --sky-0: #eaf7ff;
   --sky-1: #d6f0ff;
   --sky-2: #b9e4ff;
+  --glex-brightness: 1;
   --line: #6eb5dd;
   --ink: #083f68;
   --ink-soft: #0f5f92;
@@ -21,6 +22,7 @@ body {
   color: var(--ink);
   background: linear-gradient(180deg, var(--sky-0), var(--sky-1) 45%, var(--sky-2));
   overflow-x: hidden;
+  filter: brightness(var(--glex-brightness));
 }
 
 body.modal-open {
@@ -579,6 +581,21 @@ main {
   gap: 0.7rem;
   margin-top: 0.4rem;
   margin-bottom: 0.5rem;
+}
+
+.brightness-controls {
+  align-items: center;
+}
+
+.brightness-controls .save-btn {
+  min-width: 44px;
+}
+
+.brightness-title[disabled] {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+  min-width: 170px;
 }
 
 #bgColorInput {

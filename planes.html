@@ -7,7 +7,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
     <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
-    <title>Glex | Profile</title>
+    <title>Glex | Planes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,14 +18,13 @@
   </head>
   <body class="space-theme">
     <div class="sky-bg" aria-hidden="true"></div>
-
     <header class="top-nav">
       <div class="brand-group">
         <div class="brand-stack">
           <div class="brand">GLEX</div>
           <div class="brand-tagline">Experience the Air</div>
         </div>
-        <a class="header-profile" href="profile.html" aria-label="Profile page">
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
           <img id="headerProfileImage" class="header-avatar" alt="Profile" />
           <span id="headerProfileName" class="header-name">Pilot</span>
         </a>
@@ -37,6 +36,7 @@
         <a class="toolbar-btn" href="drones.html">Drones</a>
         <a class="toolbar-btn" href="planes.html">Planes</a>
         <button class="toolbar-btn" data-action="credits">Credits</button>
+        <button class="toolbar-btn" data-action="profile">Profile</button>
         <button class="toolbar-btn" data-action="settings">Settings</button>
       </nav>
       <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
@@ -79,40 +79,67 @@
       <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
     </dialog>
 
+    <dialog id="profileDialog" class="modal">
+      <h3>Your Profile</h3>
+      <label for="nameInput">Name</label>
+      <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
+      <label for="imageInput">Profile Image</label>
+      <input id="imageInput" type="file" accept="image/*" />
+      <div class="profile-preview">
+        <img id="profileImage" alt="Profile preview" />
+        <strong id="profileName">Pilot</strong>
+      </div>
+      <div class="modal-actions">
+        <button id="saveProfileBtn" class="save-btn">Save Profile</button>
+        <button class="close-btn" data-close="profileDialog">Close</button>
+      </div>
+    </dialog>
+
     <main class="topic-main">
-      <article class="topic-card profile-page-card">
-        <h1>Your Profile</h1>
+      <article class="topic-card">
+        <h1>Planes</h1>
+        <p>
+          Airplanes are fixed-wing aircraft designed to generate lift as air flows over their wings.
+          Pilots balance thrust, lift, drag, and weight to climb, cruise, and land safely while using
+          navigation systems, weather planning, and flight instruments to guide every trip.
+        </p>
 
-        <div class="profile-page-display">
-          <div class="profile-page-avatar-wrap">
-            <img id="profilePageImage" class="profile-page-avatar" alt="Your profile picture" />
-          </div>
-          <div class="profile-page-info">
-            <p class="profile-page-name" id="profilePageName">Pilot</p>
-            <p class="profile-page-sub">Glex Explorer</p>
-          </div>
-        </div>
+        <figure class="topic-image">
+          <img
+            src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1000&q=80&auto=format"
+            alt="A passenger airplane flying above clouds"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://picsum.photos/seed/plane/1000/500'"
+          />
+          <figcaption>Photo: Unsplash - passenger airplane in flight</figcaption>
+        </figure>
 
-        <hr class="profile-divider" />
+        <section class="build-steps">
+          <h2>Build Your Own Foam Glider Plane</h2>
+          <ol>
+            <li><strong>Choose a simple design</strong> - start with a high-wing glider shape because it is easier to balance and more stable in slow flight.</li>
+            <li><strong>Cut the main wing</strong> - use foam board to cut a straight wing panel; round the front edge slightly and keep both wing halves identical.</li>
+            <li><strong>Make the fuselage</strong> - cut a long center body section to hold the wing and tail; reinforce the nose with an extra foam layer for durability.</li>
+            <li><strong>Add tail surfaces</strong> - cut and glue a horizontal stabilizer and vertical fin at the back; keep them square to avoid turning bias.</li>
+            <li><strong>Create a slight wing dihedral</strong> - angle each wing tip up a little to help the glider self-correct and return to level flight.</li>
+            <li><strong>Balance the center of gravity</strong> - place a small amount of weight in the nose so the balance point sits around one third of the wing depth from the front.</li>
+            <li><strong>Trim test indoors</strong> - hand-launch gently and observe glide path; adjust tail angle by tiny bends to remove dives or stalls.</li>
+            <li><strong>Fly and tune outside</strong> - test in calm weather, make small trim changes, and record which setup gives the longest smooth glide.</li>
+          </ol>
+        </section>
 
-        <form class="profile-form" id="profileForm">
-          <div class="profile-form-field">
-            <label for="nameInput">Username</label>
-            <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
-          </div>
-
-          <div class="profile-form-field">
-            <label for="imageInput">Profile Image</label>
-            <input id="imageInput" type="file" accept="image/*" />
-          </div>
-
-          <div class="modal-actions">
-            <button type="button" id="saveProfileBtn" class="save-btn">Save Profile</button>
-          </div>
-        </form>
+        <section class="build-steps">
+          <h2>How Airplanes Fly</h2>
+          <ol>
+            <li><strong>Lift</strong> - wings are shaped so air pressure is usually lower above and higher below, creating upward force.</li>
+            <li><strong>Thrust</strong> - propellers or jet engines push the aircraft forward through the air.</li>
+            <li><strong>Drag</strong> - air resistance pulls backward, so designers streamline shapes to reduce it.</li>
+            <li><strong>Weight</strong> - gravity pulls downward and must be balanced by lift for steady flight.</li>
+            <li><strong>Control surfaces</strong> - ailerons roll the plane, elevators pitch the nose, and the rudder yaws left or right.</li>
+          </ol>
+        </section>
       </article>
     </main>
-
     <script src="app.js" defer></script>
   </body>
 </html>
