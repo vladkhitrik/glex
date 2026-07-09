@@ -2,7 +2,6 @@
   --sky-0: #eaf7ff;
   --sky-1: #d6f0ff;
   --sky-2: #b9e4ff;
-  --glex-brightness: 1;
   --line: #6eb5dd;
   --ink: #083f68;
   --ink-soft: #0f5f92;
@@ -13,10 +12,6 @@
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  filter: brightness(var(--glex-brightness));
 }
 
 body {
@@ -648,60 +643,6 @@ main {
   color: #eaf3ff;
   border-color: rgba(200, 220, 255, 0.24);
   background: linear-gradient(180deg, rgba(26, 44, 76, 0.92) 0%, rgba(10, 22, 42, 0.92) 100%);
-}
-
-.brightness-controls {
-  align-items: center;
-}
-
-.brightness-controls .save-btn {
-  min-width: 44px;
-}
-
-.brightness-title[disabled] {
-  opacity: 1;
-  cursor: default;
-  pointer-events: none;
-  min-width: 170px;
-}
-
-.language-label {
-  margin-top: 0.7rem;
-  display: block;
-}
-
-.language-controls {
-  align-items: center;
-}
-
-.language-select {
-  width: 100%;
-  min-height: 40px;
-  border-radius: 12px;
-  border: 2px solid rgba(8, 63, 104, 0.5);
-  padding: 0.45rem 0.6rem;
-  color: #0a203a;
-  background: #ffffff;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.space-theme .language-select,
-.earth-home .language-select {
-  color: #0a203a;
-  border-color: rgba(8, 63, 104, 0.5);
-  background: #ffffff;
-}
-
-.language-select:focus-visible {
-  border-color: #ffb86b;
-}
-
-.language-select option {
-  color: #0a203a;
-  background: #ffffff;
-  font-weight: 600;
 }
 
 #bgColorInput {

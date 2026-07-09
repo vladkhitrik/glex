@@ -13,55 +13,10 @@ const fontSizeInput = document.getElementById("fontSizeInput");
 const fontSizeLabel = document.getElementById("fontSizeLabel");
 const resetFontBtn = document.getElementById("resetFontBtn");
 const saveFontBtn = document.getElementById("saveFontBtn");
-const increaseBrightnessBtn = document.getElementById("increaseBrightnessBtn");
-const decreaseBrightnessBtn = document.getElementById("decreaseBrightnessBtn");
-const brightnessLabel = document.getElementById("brightnessLabel");
-let languageSelect = null;
 let fontSizeSimulation = null;
 
 const DEFAULT_BG = "#d6f0ff";
 const DEFAULT_FONT = 16;
-const DEFAULT_BRIGHTNESS = 100;
-const MIN_BRIGHTNESS = 20;
-const MAX_BRIGHTNESS = 200;
-const BRIGHTNESS_STEP = 20;
-const DEFAULT_LANGUAGE = "en";
-const LANGUAGE_OPTIONS = [
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" },
-  { code: "fr", label: "Français" },
-  { code: "de", label: "Deutsch" },
-  { code: "it", label: "Italiano" },
-  { code: "pt", label: "Português" },
-  { code: "nl", label: "Nederlands" },
-  { code: "pl", label: "Polski" },
-  { code: "ru", label: "Русский" },
-  { code: "uk", label: "Українська" },
-  { code: "tr", label: "Türkçe" },
-  { code: "ar", label: "العربية" },
-  { code: "he", label: "עברית" },
-  { code: "hi", label: "हिन्दी" },
-  { code: "bn", label: "বাংলা" },
-  { code: "zh-CN", label: "简体中文" },
-  { code: "ja", label: "日本語" },
-  { code: "ko", label: "한국어" },
-  { code: "th", label: "ไทย" },
-  { code: "vi", label: "Tiếng Việt" },
-  { code: "id", label: "Bahasa Indonesia" },
-  { code: "ms", label: "Bahasa Melayu" },
-  { code: "fil", label: "Filipino" },
-  { code: "sw", label: "Kiswahili" },
-  { code: "fa", label: "فارسی" },
-  { code: "ur", label: "اردو" },
-  { code: "el", label: "Ελληνικά" },
-  { code: "cs", label: "Čeština" },
-  { code: "ro", label: "Română" },
-  { code: "sv", label: "Svenska" },
-  { code: "no", label: "Norsk" },
-  { code: "da", label: "Dansk" },
-  { code: "fi", label: "Suomi" },
-  { code: "hu", label: "Magyar" },
-];
 
 const profileName = document.getElementById("profileName");
 const profileImage = document.getElementById("profileImage");
@@ -270,13 +225,8 @@ function openDialog(dialog) {
   }
 }
 
-function isHomePage() {
-  const path = window.location.pathname.toLowerCase();
-  return path.endsWith("/home.html") || path === "/home.html";
-}
-
 function ensureCornerHomeButton() {
-  if (isHomePage() || document.getElementById("cornerHomeBtn") || !document.body) {
+  if (document.getElementById("cornerHomeBtn") || !document.body) {
     return;
   }
 
@@ -555,14 +505,6 @@ function applyFontSize(size) {
   }
 }
 
-function applyBrightness(level) {
-  const boundedLevel = Math.min(MAX_BRIGHTNESS, Math.max(MIN_BRIGHTNESS, level));
-  const brightnessScale = (boundedLevel / 100).toFixed(2);
-  document.documentElement.style.setProperty("--glex-brightness", brightnessScale);
-  if (brightnessLabel) brightnessLabel.textContent = `${boundedLevel}%`;
-  return boundedLevel;
-}
-
 function ensureTextSizeSimulation() {
   if (!settingsDialog) {
     return null;
@@ -582,120 +524,9 @@ function ensureTextSizeSimulation() {
   return marker;
 }
 
-function ensureLanguageControls() {
-  if (!settingsDialog) {
-    return null;
-  }
-
-  const populateLanguageOptions = (selectEl) => {
-    if (!selectEl) {
-      return;
-    }
-
-    if (selectEl.options.length) {
-      return;
-    }
-
-    LANGUAGE_OPTIONS.forEach((entry) => {
-      const option = document.createElement("option");
-      option.value = entry.code;
-      option.textContent = entry.label;
-      selectEl.appendChild(option);
-    });
-  };
-
-  const existing = settingsDialog.querySelector("#languageSelect");
-  if (existing) {
-    populateLanguageOptions(existing);
-    return existing;
-  }
-
-  const languageLabel = document.createElement("label");
-  languageLabel.setAttribute("for", "languageSelect");
-  languageLabel.className = "language-label";
-  languageLabel.textContent = "Language";
-
-  const languageRow = document.createElement("div");
-  languageRow.className = "settings-row language-controls";
-
-  const select = document.createElement("select");
-  select.id = "languageSelect";
-  select.className = "language-select";
-  select.setAttribute("aria-label", "Choose language");
-  populateLanguageOptions(select);
-
-  languageRow.appendChild(select);
-
-  const saveButton = settingsDialog.querySelector("#saveFontBtn");
-  if (saveButton) {
-    settingsDialog.insertBefore(languageLabel, saveButton);
-    settingsDialog.insertBefore(languageRow, saveButton);
-  } else {
-    settingsDialog.appendChild(languageLabel);
-    settingsDialog.appendChild(languageRow);
-  }
-
-  return select;
-}
-
-function detectPreferredLanguage() {
-  const locales =
-    Array.isArray(navigator.languages) && navigator.languages.length
-      ? navigator.languages
-      : [navigator.language || DEFAULT_LANGUAGE];
-
-  for (const locale of locales) {
-    if (!locale) {
-      continue;
-    }
-
-    const normalizedLocale = String(locale).toLowerCase();
-    const exactMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase() === normalizedLocale);
-    if (exactMatch) {
-      return exactMatch.code;
-    }
-
-    const baseLocale = normalizedLocale.split("-")[0];
-    const baseMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase() === baseLocale);
-    if (baseMatch) {
-      return baseMatch.code;
-    }
-
-    const regionMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase().startsWith(`${baseLocale}-`));
-    if (regionMatch) {
-      return regionMatch.code;
-    }
-  }
-
-  return DEFAULT_LANGUAGE;
-}
-
 const savedFont = parseInt(localStorage.getItem("glex.fontSize") || DEFAULT_FONT, 10);
 fontSizeSimulation = ensureTextSizeSimulation();
 applyFontSize(savedFont);
-let currentBrightness = applyBrightness(parseInt(localStorage.getItem("glex.brightness") || DEFAULT_BRIGHTNESS, 10));
-languageSelect = ensureLanguageControls();
-
-const storedLanguage = localStorage.getItem("glex.language");
-const activeLanguage = storedLanguage || detectPreferredLanguage();
-if (!storedLanguage) {
-  localStorage.setItem("glex.language", activeLanguage);
-}
-
-document.documentElement.lang = activeLanguage;
-if (languageSelect) {
-  if ([...languageSelect.options].some((option) => option.value === activeLanguage)) {
-    languageSelect.value = activeLanguage;
-  } else {
-    languageSelect.value = DEFAULT_LANGUAGE;
-  }
-
-  languageSelect.addEventListener("change", () => {
-    const selectedLanguage = languageSelect.value || DEFAULT_LANGUAGE;
-    localStorage.setItem("glex.language", selectedLanguage);
-    document.documentElement.lang = selectedLanguage;
-  });
-}
 
 let committedFontSize = savedFont;
 let draftFontSize = savedFont;
@@ -737,20 +568,6 @@ if (saveFontBtn) {
     }
     applyFontSize(committedFontSize);
     window.location.href = "home.html";
-  });
-}
-
-if (increaseBrightnessBtn) {
-  increaseBrightnessBtn.addEventListener("click", () => {
-    currentBrightness = applyBrightness(currentBrightness + BRIGHTNESS_STEP);
-    localStorage.setItem("glex.brightness", String(currentBrightness));
-  });
-}
-
-if (decreaseBrightnessBtn) {
-  decreaseBrightnessBtn.addEventListener("click", () => {
-    currentBrightness = applyBrightness(currentBrightness - BRIGHTNESS_STEP);
-    localStorage.setItem("glex.brightness", String(currentBrightness));
   });
 }
 
