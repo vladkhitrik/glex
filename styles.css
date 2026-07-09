@@ -629,6 +629,7 @@ main {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 236, 255, 0.85) 100%);
   font-family: inherit;
   font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .space-theme .language-select,
@@ -636,6 +637,16 @@ main {
   color: #eaf3ff;
   border-color: rgba(200, 220, 255, 0.24);
   background: linear-gradient(180deg, rgba(26, 44, 76, 0.92) 0%, rgba(10, 22, 42, 0.92) 100%);
+}
+
+.language-select:focus-visible {
+  border-color: #ffb86b;
+}
+
+.language-select option {
+  color: #eaf3ff;
+  background: #0f2342;
+  font-weight: 600;
 }
 
 #bgColorInput {
