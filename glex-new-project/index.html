@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glex Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="launchScreen" class="launch-screen" aria-label="Launch screen">
+    <div class="launch-stars" aria-hidden="true"></div>
+    <div class="launch-mars" aria-hidden="true"></div>
+    <div class="launch-copy">
+      <p class="eyebrow">Glex Games</p>
+      <h1>GLEX FLIGHT SIM</h1>
+      <p class="lead">Mars mission arcade experience</p>
+      <button id="launchPlay" class="cta" type="button">Play</button>
+    </div>
+  </section>
+
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="shell">
+    <section class="mars-hero" aria-label="Glex Games hero">
+      <div class="mars-disc" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Glex Universe</p>
+        <h1>GLEX GAMES</h1>
+        <div class="hero-actions">
+          <a class="cta" href="rockets-shop.html">Rockets</a>
+          <a class="cta ghost" href="new-web.html">New Web</a>
+        </div>
+        <p class="lead">
+          Rocket-themed arcade action with a Mars launch vibe inspired by Glex.
+        </p>
+      </div>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Fast Arcade</h2>
+        <p>Quick rounds, smooth controls, and instant restart when the action gets intense.</p>
+      </article>
+      <article class="card">
+        <h2>Rocket Theme</h2>
+        <p>Blue steel Glex vibe, starfield backdrop, and glowing HUD-inspired interface.</p>
+      </article>
+      <article class="card">
+        <h2>Expandable</h2>
+        <p>Add more mini-games later in this same style with shared score and profile systems.</p>
+      </article>
+    </section>
+
+    <section class="game-wrap" aria-label="Rocket Blaster game">
+      <div class="hud">
+        <div class="stat">Score: <span id="score">0</span></div>
+        <div class="stat">Level: <span id="level">1</span></div>
+        <div class="stat">Ammo: <span id="ammo">0/0</span></div>
+        <div class="stat">Hearts: <span id="lives">3</span></div>
+        <div class="stat">Best: <span id="best">0</span></div>
+      </div>
+      <canvas id="game" width="900" height="480" aria-label="Rocket Blaster canvas"></canvas>
+      <div id="gameOverScreen" class="game-over hidden" aria-live="polite">
+        <div class="game-over-card">
+          <h2>Mission Ended</h2>
+          <p>Your score: <span id="finalScore">0</span></p>
+          <p>Your level: <span id="finalLevel">1</span></p>
+          <button id="restartBtn" class="cta" type="button">Restart</button>
+        </div>
+      </div>
+      <div class="controls">
+        <span id="controlsText">Move: Arrow keys or A/D | Shoot: Space | Pause: P | Restart: Enter</span>
+      </div>
+      <div class="mode-row" aria-label="Game modes">
+        <button class="mode-btn active" id="modeBlaster" type="button">Rocket Blaster</button>
+        <button class="mode-btn" id="modeDodge" type="button">Asteroid Dodge</button>
+        <button class="mode-btn" id="modeRush" type="button">Rapid Assault</button>
+      </div>
+      <div class="action-row">
+        <button id="startBtn" class="cta" type="button">Start Rocket Blaster</button>
+        <button id="pauseBtn" class="cta ghost" type="button">Pause</button>
+        <button id="continueBtn" class="cta ghost" type="button">Continue</button>
+        <button id="refreshBtn" class="cta ghost" type="button">Refresh Game</button>
+        <button id="fullBtn" class="cta ghost" type="button">Full Screen</button>
+      </div>
+      <div id="tapStart" class="tap-start hidden">Tap or click anywhere to start</div>
+      <p id="status" class="status" aria-live="polite">Press Start to launch.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

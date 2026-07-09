@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Your Plane – GLEX Flight Sim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100dvh;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #edf6ff;
+      background:
+        linear-gradient(180deg, rgba(2,12,20,0.55) 0%, rgba(2,12,20,0.82) 100%),
+        url("https://images.unsplash.com/photo-1436891620584-47fd0e565afb?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1rem 3rem;
+      gap: 2rem;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 24px rgba(80,160,255,0.7);
+    }
+
+    p.subtitle {
+      font-size: 1.05rem;
+      color: #a8cbe8;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .plane-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.4rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .plane-card {
+      background: rgba(10,30,60,0.72);
+      border: 2px solid rgba(80,160,255,0.18);
+      border-radius: 16px;
+      padding: 1.4rem 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
+      user-select: none;
+    }
+
+    .plane-card:hover {
+      border-color: rgba(80,160,255,0.6);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(80,160,255,0.22);
+    }
+
+    .plane-card.selected {
+      border-color: #50a0ff;
+      box-shadow: 0 0 0 3px rgba(80,160,255,0.35), 0 8px 32px rgba(80,160,255,0.28);
+    }
+
+    .plane-emoji {
+      font-size: 3.2rem;
+      line-height: 1;
+    }
+
+    .plane-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b8d9f8;
+      text-align: center;
+    }
+
+    .plane-desc {
+      font-size: 0.82rem;
+      color: #7aafd4;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .fly-btn {
+      margin-top: 0.5rem;
+      padding: 0.85rem 3.2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, #1565c0 0%, #0d3c8a 100%);
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(21,101,192,0.45);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .fly-btn.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .fly-btn.active:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 32px rgba(21,101,192,0.6);
+    }
+
+    .back-link {
+      font-size: 0.85rem;
+      color: #5a8fbf;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .back-link:hover { color: #a8cbe8; }
+  </style>
+</head>
+<body>
+  <h1>Choose Your Plane</h1>
+  <p class="subtitle">Select an aircraft to begin your flight</p>
+
+  <div class="plane-grid">
+    <div class="plane-card" data-plane="cessna" onclick="selectPlane(this)">
+      <div class="plane-emoji">🛩️</div>
+      <div class="plane-name">Cessna 172</div>
+      <div class="plane-desc">Classic single-engine prop. Easy to handle, great for beginners.</div>
+    </div>
+    <div class="plane-card" data-plane="fighter" onclick="selectPlane(this)">
+      <div class="plane-emoji">✈️</div>
+      <div class="plane-name">F-16 Falcon</div>
+      <div class="plane-desc">Supersonic fighter jet. Fast, agile, built for speed.</div>
+    </div>
+    <div class="plane-card" data-plane="jumbo" onclick="selectPlane(this)">
+      <div class="plane-emoji">🛫</div>
+      <div class="plane-name">Boeing 747</div>
+      <div class="plane-desc">Iconic jumbo jet. Wide-body, heavy, and majestic.</div>
+    </div>
+    <div class="plane-card" data-plane="concorde" onclick="selectPlane(this)">
+      <div class="plane-emoji">🚀</div>
+      <div class="plane-name">Concorde</div>
+      <div class="plane-desc">Supersonic airliner. Crosses oceans at twice the speed of sound.</div>
+    </div>
+    <div class="plane-card" data-plane="helicopter" onclick="selectPlane(this)">
+      <div class="plane-emoji">🚁</div>
+      <div class="plane-name">Apache</div>
+      <div class="plane-desc">Military helicopter. Hover, strafe, and scout at low altitude.</div>
+    </div>
+    <div class="plane-card" data-plane="spaceplane" onclick="selectPlane(this)">
+      <div class="plane-emoji">🛸</div>
+      <div class="plane-name">Space Plane X</div>
+      <div class="plane-desc">Experimental hypersonic craft. Reach the edge of the atmosphere.</div>
+    </div>
+  </div>
+
+  <a class="fly-btn" id="flyBtn" href="#">Fly</a>
+  <a class="back-link" href="glex-flight-sim.html">← Back</a>
+
+  <script>
+    let selected = null;
+    function selectPlane(card) {
+      document.querySelectorAll('.plane-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selected = card.dataset.plane;
+      const btn = document.getElementById('flyBtn');
+      btn.classList.add('active');
+      btn.href = 'flight-world.html?plane=' + selected;
+    }
+  </script>
+</body>
+</html>

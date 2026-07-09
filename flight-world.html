@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLEX Flight World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+    canvas { display: block; }
+
+    /* ── Spawn screen overlay ── */
+    #spawnScreen {
+      position: fixed; inset: 0;
+      background: rgba(2,10,22,0.82);
+      backdrop-filter: blur(6px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem;
+      z-index: 20;
+      color: #edf6ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #spawnScreen h2 {
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(80,160,255,0.8);
+    }
+
+    #spawnScreen p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: #a8cbe8;
+      letter-spacing: 0.04em;
+      text-align: center;
+      max-width: 340px;
+    }
+
+    #globeCanvas {
+      border-radius: 50%;
+      border: 2px solid rgba(80,160,255,0.4);
+      box-shadow: 0 0 40px rgba(80,160,255,0.3);
+      cursor: crosshair;
+    }
+
+    #spawnBtn {
+      padding: 0.75rem 2.8rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #1565c0 0%, #0d3c8a 100%);
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(21,101,192,0.5);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    #spawnBtn.ready { opacity: 1; pointer-events: auto; }
+    #spawnBtn.ready:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 32px rgba(21,101,192,0.65); }
+
+    #spawnHint {
+      font-size: 0.78rem;
+      color: #4a7fa8;
+      letter-spacing: 0.06em;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* ── HUD ── */
+    #hud {
+      position: fixed;
+      top: 1rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(160,220,255,0.85);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(5,15,35,0.55);
+      border: 1px solid rgba(80,160,255,0.2);
+      border-radius: 8px;
+      padding: 0.45rem 1.2rem;
+      pointer-events: none;
+      display: none;
+    }
+
+    /* ── Arrow controls ── */
+    #controls {
+      position: fixed;
+      bottom: 1.4rem; right: 1.4rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      z-index: 10;
+    }
+
+    #controls .arrow-row {
+      display: flex;
+      gap: 4px;
+    }
+
+    .arrow-btn {
+      width: 48px; height: 48px;
+      background: rgba(10,30,60,0.78);
+      border: 1.5px solid rgba(80,160,255,0.35);
+      border-radius: 10px;
+      color: #a8cbe8;
+      font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      transition: background 0.12s, border-color 0.12s;
+      font-family: monospace;
+    }
+
+    .arrow-btn:active, .arrow-btn.pressed {
+      background: rgba(21,101,192,0.55);
+      border-color: #50a0ff;
+    }
+
+    #backBtn {
+      position: fixed;
+      top: 1rem; left: 1rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      color: #5a8fbf;
+      text-decoration: none;
+      letter-spacing: 0.07em;
+      background: rgba(5,15,35,0.6);
+      border: 1px solid rgba(80,160,255,0.18);
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      z-index: 30;
+    }
+    #backBtn:hover { color: #a8cbe8; }
+  </style>
+</head>
+<body>
+
+<!-- Spawn overlay -->
+<div id="spawnScreen">
+  <h2>Choose Spawn Point</h2>
+  <p>Click anywhere on the globe to place your aircraft, then press Fly.</p>
+  <canvas id="globeCanvas" width="320" height="320"></canvas>
+  <div id="spawnHint">No spawn selected</div>
+  <button id="spawnBtn" onclick="startFlight()">Fly</button>
+</div>
+
+<!-- Back -->
+<a id="backBtn" href="flight-select.html">← Back</a>
+
+<!-- HUD -->
+<div id="hud">
+  <span id="hudText">ALT: 0 m &nbsp;|&nbsp; SPD: 0 kts &nbsp;|&nbsp; HDG: 0°</span>
+</div>
+
+<!-- Arrow controls -->
+<div id="controls">
+  <div class="arrow-row">
+    <div class="arrow-btn" id="btnUp"    data-key="ArrowUp">▲</div>
+  </div>
+  <div class="arrow-row">
+    <div class="arrow-btn" id="btnLeft"  data-key="ArrowLeft">◀</div>
+    <div class="arrow-btn" id="btnDown"  data-key="ArrowDown">▼</div>
+    <div class="arrow-btn" id="btnRight" data-key="ArrowRight">▶</div>
+  </div>
+</div>
+
+<!-- Three.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
+
+<script>
+// ── Params ──────────────────────────────────────────────
+const params = new URLSearchParams(location.search);
+const planeName = params.get('plane') || 'cessna';
+
+// Plane configs
+const PLANE_CFG = {
+  cessna:     { speed: 0.012, climb: 0.006, color: 0xffd700, name: 'Cessna 172' },
+  fighter:    { speed: 0.032, climb: 0.014, color: 0x78c8ff, name: 'F-16 Falcon' },
+  jumbo:      { speed: 0.018, climb: 0.008, color: 0xffffff, name: 'Boeing 747' },
+  concorde:   { speed: 0.045, climb: 0.018, color: 0xff6a6a, name: 'Concorde' },
+  helicopter: { speed: 0.008, climb: 0.012, color: 0x90ee90, name: 'Apache' },
+  spaceplane: { speed: 0.065, climb: 0.028, color: 0xda70d6, name: 'Space Plane X' },
+};
+const cfg = PLANE_CFG[planeName] || PLANE_CFG.cessna;
+
+// ── Globe picker ─────────────────────────────────────────
+const gc = document.getElementById('globeCanvas');
+const gctx = gc.getContext('2d');
+let spawnLat = null, spawnLon = null;
+
+function drawGlobe() {
+  const W = gc.width, H = gc.height, cx = W/2, cy = H/2, r = W/2 - 4;
+  gctx.clearRect(0,0,W,H);
+
+  // Ocean
+  const ocean = gctx.createRadialGradient(cx-r*0.3,cy-r*0.25,r*0.05,cx,cy,r);
+  ocean.addColorStop(0,'#2a6da8'); ocean.addColorStop(1,'#0b2e4a');
+  gctx.beginPath(); gctx.arc(cx,cy,r,0,Math.PI*2);
+  gctx.fillStyle = ocean; gctx.fill();
+
+  // Simple land patches
+  const land = [
+    // North America
+    {x:cx-r*0.35,y:cy-r*0.25,w:r*0.32,h:r*0.38},
+    // South America
+    {x:cx-r*0.22,y:cy+r*0.12,w:r*0.18,h:r*0.32},
+    // Europe/Africa
+    {x:cx+r*0.06,y:cy-r*0.18,w:r*0.14,h:r*0.55},
+    // Asia
+    {x:cx+r*0.18,y:cy-r*0.32,w:r*0.42,h:r*0.44},
+    // Australia
+    {x:cx+r*0.38,y:cy+r*0.2,w:r*0.18,h:r*0.18},
+  ];
+  gctx.fillStyle = '#3a7a3a';
+  land.forEach(l => {
+    gctx.beginPath();
+    gctx.ellipse(l.x,l.y,l.w/2,l.h/2,0,0,Math.PI*2);
+    gctx.fill();
+  });
+
+  // Clip circle
+  gctx.save();
+  gctx.globalCompositeOperation = 'destination-in';
+  gctx.beginPath(); gctx.arc(cx,cy,r,0,Math.PI*2); gctx.fill();
+  gctx.restore();
+
+  // Globe highlight
+  const shine = gctx.createRadialGradient(cx-r*0.3,cy-r*0.3,r*0.05,cx,cy,r);
+  shine.addColorStop(0,'rgba(255,255,255,0.18)'); shine.addColorStop(0.5,'rgba(255,255,255,0)');
+  gctx.beginPath(); gctx.arc(cx,cy,r,0,Math.PI*2);
+  gctx.fillStyle = shine; gctx.fill();
+
+  // Spawn marker
+  if (spawnLat !== null) {
+    const mx = cx + spawnLon/180 * r;
+    const my = cy - spawnLat/90  * r;
+    gctx.beginPath(); gctx.arc(mx,my,7,0,Math.PI*2);
+    gctx.fillStyle = '#ff4444'; gctx.fill();
+    gctx.strokeStyle = '#fff'; gctx.lineWidth = 2; gctx.stroke();
+  }
+
+  // Border
+  gctx.beginPath(); gctx.arc(cx,cy,r,0,Math.PI*2);
+  gctx.strokeStyle = 'rgba(80,160,255,0.5)'; gctx.lineWidth = 2; gctx.stroke();
+}
+
+gc.addEventListener('click', function(e) {
+  const rect = gc.getBoundingClientRect();
+  const cx = gc.width/2, cy = gc.height/2, r = cx-4;
+  const x = (e.clientX - rect.left) * (gc.width/rect.width)  - cx;
+  const y = (e.clientY - rect.top)  * (gc.height/rect.height) - cy;
+  if (x*x + y*y > r*r) return;
+  spawnLon = (x/r)*180;
+  spawnLat = -(y/r)*90;
+  document.getElementById('spawnHint').textContent =
+    `Lat: ${spawnLat.toFixed(1)}°  Lon: ${spawnLon.toFixed(1)}°`;
+  document.getElementById('spawnBtn').classList.add('ready');
+  drawGlobe();
+});
+
+drawGlobe();
+
+// ── Three.js scene ───────────────────────────────────────
+let scene, camera, renderer, plane3d;
+let altitude = 200, heading = 0, speed = 0;
+let keys = {};
+let flying = false;
+
+function startFlight() {
+  document.getElementById('spawnScreen').style.display = 'none';
+  document.getElementById('hud').style.display = 'block';
+  document.getElementById('controls').style.display = 'flex';
+  flying = true;
+  initThree();
+}
+
+function initThree() {
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x87ceeb, 0.0008);
+
+  camera = new THREE.PerspectiveCamera(70, innerWidth/innerHeight, 0.1, 20000);
+  camera.position.set(0, altitude, 10);
+  camera.lookAt(0, altitude, -50);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.setPixelRatio(devicePixelRatio);
+  document.body.appendChild(renderer.domElement);
+
+  // Sky
+  scene.background = new THREE.Color(0x87ceeb);
+
+  // Sun
+  const sun = new THREE.DirectionalLight(0xfff5e0, 1.4);
+  sun.position.set(300, 600, 300);
+  sun.castShadow = true;
+  scene.add(sun);
+  scene.add(new THREE.AmbientLight(0xaad4f5, 0.6));
+
+  // Ground
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(20000, 20000, 64, 64),
+    new THREE.MeshLambertMaterial({ color: 0x4a8f3f })
+  );
+  ground.rotation.x = -Math.PI/2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Grid lines (runway feel)
+  const grid = new THREE.GridHelper(20000, 100, 0x2a5a25, 0x2a5a25);
+  grid.position.y = 0.1;
+  scene.add(grid);
+
+  // Water patch
+  const water = new THREE.Mesh(
+    new THREE.PlaneGeometry(4000, 4000),
+    new THREE.MeshLambertMaterial({ color: 0x1a6fa0, transparent: true, opacity: 0.85 })
+  );
+  water.rotation.x = -Math.PI/2;
+  water.position.set(3000, 0.2, -2000);
+  scene.add(water);
+
+  // Mountains
+  for (let i = 0; i < 30; i++) {
+    const h = 300 + Math.random()*700;
+    const mt = new THREE.Mesh(
+      new THREE.ConeGeometry(120+Math.random()*200, h, 7),
+      new THREE.MeshLambertMaterial({ color: 0x706050 })
+    );
+    mt.position.set((Math.random()-0.5)*14000, h/2, -500-(Math.random()*12000));
+    scene.add(mt);
+  }
+
+  // Clouds
+  for (let i = 0; i < 40; i++) {
+    const cloud = makeCloud();
+    cloud.position.set((Math.random()-0.5)*8000, 400+Math.random()*400, (Math.random()-0.5)*8000);
+    scene.add(cloud);
+  }
+
+  // Plane mesh
+  plane3d = makePlane(cfg.color);
+  plane3d.position.set(0, altitude, 0);
+  scene.add(plane3d);
+
+  window.addEventListener('keydown', e => keys[e.key] = true);
+  window.addEventListener('keyup',   e => keys[e.key] = false);
+
+  // Touch arrow buttons
+  document.querySelectorAll('.arrow-btn').forEach(btn => {
+    const key = btn.dataset.key;
+    btn.addEventListener('pointerdown', () => { keys[key] = true;  btn.classList.add('pressed'); });
+    btn.addEventListener('pointerup',   () => { keys[key] = false; btn.classList.remove('pressed'); });
+    btn.addEventListener('pointerleave',() => { keys[key] = false; btn.classList.remove('pressed'); });
+  });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  animate();
+}
+
+function makeCloud() {
+  const g = new THREE.Group();
+  const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.88 });
+  [[0,0,0,1],[1.1,0.2,0,0.75],[-1,0.1,0,0.7],[0.4,0.55,0,0.6]].forEach(([x,y,z,s]) => {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(80*s, 7, 6), mat);
+    m.position.set(x*60, y*40, z*50); g.add(m);
+  });
+  return g;
+}
+
+function makePlane(color) {
+  const g = new THREE.Group();
+  const mat = new THREE.MeshPhongMaterial({ color, shininess: 80 });
+
+  // Fuselage
+  const fus = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 0.8, 14, 10), mat);
+  fus.rotation.x = Math.PI/2; g.add(fus);
+
+  // Wings
+  const wing = new THREE.Mesh(new THREE.BoxGeometry(22, 0.5, 5), mat);
+  wing.position.set(0, 0, 1); g.add(wing);
+
+  // Tail fin
+  const tail = new THREE.Mesh(new THREE.BoxGeometry(0.4, 4, 4), mat);
+  tail.position.set(0, 2, 7); g.add(tail);
+
+  // Horizontal stabiliser
+  const stab = new THREE.Mesh(new THREE.BoxGeometry(8, 0.4, 3), mat);
+  stab.position.set(0, 0, 6.5); g.add(stab);
+
+  return g;
+}
+
+const SPEED_M_S = cfg.speed * 1000; // units per frame at 60fps
+const CLIMB = cfg.climb * 80;
+
+let camOffY = 30, camOffZ = 60;
+
+function animate() {
+  requestAnimationFrame(animate);
+  if (!flying) { renderer.render(scene, camera); return; }
+
+  // Controls: arrows = pitch & yaw
+  if (keys['ArrowLeft'])  { heading += 0.025; }
+  if (keys['ArrowRight']) { heading -= 0.025; }
+  if (keys['ArrowUp'])    { altitude += CLIMB; }
+  if (keys['ArrowDown'])  { altitude = Math.max(30, altitude - CLIMB); }
+
+  // Move forward
+  const spd = cfg.speed * 60;
+  plane3d.position.x -= Math.sin(heading) * spd;
+  plane3d.position.z -= Math.cos(heading) * spd;
+  plane3d.position.y  = altitude;
+  plane3d.rotation.y  = heading;
+
+  // Bank on turn
+  plane3d.rotation.z = (keys['ArrowLeft'] ? 0.3 : keys['ArrowRight'] ? -0.3 : 0);
+  plane3d.rotation.x = (keys['ArrowUp']   ? -0.15 : keys['ArrowDown'] ? 0.15 : 0);
+
+  // Camera follow
+  const cx = plane3d.position.x + Math.sin(heading) * camOffZ;
+  const cz = plane3d.position.z + Math.cos(heading) * camOffZ;
+  camera.position.set(cx, altitude + camOffY, cz);
+  camera.lookAt(plane3d.position);
+
+  speed = Math.round(spd * 60 * 1.5);
+  document.getElementById('hudText').textContent =
+    `${cfg.name}  |  ALT: ${Math.round(altitude)} m  |  SPD: ${speed} kts  |  HDG: ${Math.round((heading*180/Math.PI+360)%360)}°`;
+
+  renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>

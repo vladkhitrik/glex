@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Aircraft - GLEX Flight Sim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:rgba(7,20,40,.82);--bg2:rgba(12,30,56,.84);--edge:rgba(106,182,255,.18);--edge2:rgba(106,182,255,.58);--text:#edf6ff;--muted:#a8cbe8}
+    body{min-height:100dvh;font-family:'Space Grotesk',sans-serif;color:var(--text);background:linear-gradient(180deg,#020e20 0%,#091b35 100%);display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:1.8rem 1rem 2.2rem}
+    .tag{font-family:'Orbitron',sans-serif;letter-spacing:.26em;text-transform:uppercase;font-size:.72rem;color:#9bc1dc}
+    h1{font-family:'Orbitron',sans-serif;font-size:clamp(1.6rem,4.8vw,3rem);letter-spacing:.12em;text-transform:uppercase;text-align:center;text-shadow:0 0 24px rgba(79,161,255,.55)}
+    .sub{max-width:44rem;text-align:center;color:var(--muted);line-height:1.6}
+    .grid{width:min(1120px,100%);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+    .card{position:relative;overflow:hidden;border-radius:18px;padding:1rem .95rem;background:linear-gradient(180deg,var(--bg2),var(--bg));border:2px solid var(--edge);cursor:pointer;user-select:none;min-height:220px;display:flex;flex-direction:column;align-items:center;gap:.72rem;transition:transform .18s,border-color .18s,box-shadow .18s}
+    .card:hover{transform:translateY(-4px);border-color:var(--edge2);box-shadow:0 18px 34px rgba(0,0,0,.26)}
+    .card.selected{border-color:rgba(79,161,255,.95);box-shadow:0 0 0 3px rgba(79,161,255,.18),0 18px 34px rgba(0,0,0,.26)}
+    .art{position:relative;width:124px;height:76px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.34))}
+    .body{position:absolute;left:25px;top:28px;width:76px;height:18px;border-radius:18px;transform:skewX(-12deg);background:linear-gradient(180deg,var(--body,#d8e4f0),var(--body-dark,#9fb4c7))}
+    .body:before{content:'';position:absolute;inset:4px 13px;border-radius:12px;background:linear-gradient(180deg,var(--stripe,#2e84ff),var(--stripe-dark,#1f4f98));opacity:.85}
+    .nose{position:absolute;left:93px;top:29px;width:13px;height:16px;background:linear-gradient(180deg,var(--body,#d8e4f0),var(--body-dark,#9fb4c7));clip-path:polygon(0 0,100% 25%,100% 75%,0 100%)}
+    .tail{position:absolute;left:20px;top:18px;width:12px;height:24px;background:linear-gradient(180deg,var(--body,#d8e4f0),var(--body-dark,#9fb4c7));clip-path:polygon(0 100%,42% 0,100% 100%)}
+    .wing,.wing.r{position:absolute;left:43px;top:31px;width:44px;height:8px;background:linear-gradient(180deg,var(--wing,#e7edf4),var(--wing2,#a6b9c9));transform:skewX(-34deg);border-radius:8px}
+    .wing.r{left:44px;top:38px;transform:skewX(34deg)}
+    .engine{position:absolute;top:34px;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 40% 40%,rgba(255,255,255,.95),rgba(120,150,175,.95));box-shadow:0 0 0 1px rgba(20,35,55,.3) inset}
+    .e1{left:55px}.e2{left:71px}
+    .livery{position:absolute;left:28px;top:33px;width:58px;height:5px;border-radius:999px;background:linear-gradient(90deg,transparent 0,var(--stripe,#4fa1ff) 20%,var(--stripe-2,#f5f6f8) 48%,var(--stripe,#4fa1ff) 76%,transparent 100%);opacity:.92}
+    .alt{top:41px;height:4px;opacity:.7}
+    .name{font-family:'Orbitron',sans-serif;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-align:center;color:#d8ebff}
+    .meta{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:#8bb8df;text-align:center}
+    .desc{margin-top:auto;font-size:.79rem;line-height:1.45;color:#abc9e3;text-align:center}
+    .actions{width:min(1120px,100%);display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;padding-top:.3rem}
+    .liveries{width:min(1120px,100%);display:grid;gap:.55rem;padding-top:.15rem}
+    .liveries-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;color:#9bc1dc;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+    .livery-row{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+    .livery-btn{appearance:none;border:1px solid rgba(106,182,255,.28);background:rgba(10,27,50,.86);color:#d3e8fb;border-radius:999px;padding:.55rem .9rem;font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+    .livery-btn.active{background:linear-gradient(135deg,#2d79da 0%,#0d3c8a 100%);border-color:rgba(106,182,255,.7);color:#fff}
+    .fly,.back{appearance:none;border:none;border-radius:999px;padding:.88rem 2.5rem;font-family:'Orbitron',sans-serif;font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s,color .15s,border-color .15s}
+    .fly{color:#fff;background:linear-gradient(135deg,#2d79da 0%,#0d3c8a 100%);box-shadow:0 10px 24px rgba(21,101,192,.4);opacity:.4;pointer-events:none}
+    .fly.active{opacity:1;pointer-events:auto}.fly.active:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(21,101,192,.55)}
+    .back{color:#d3e8fb;background:rgba(10,27,50,.86);border:1px solid rgba(106,182,255,.28)}
+    .back:hover{transform:translateY(-2px);border-color:rgba(106,182,255,.48);color:#fff}
+    .note{width:min(1120px,100%);text-align:center;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(173,207,239,.58);padding-top:.1rem}
+    .card[data-plane="cessna"]{--body:#d6dde5;--body-dark:#a6b3bf;--stripe:#3f86ff;--stripe-dark:#2254a0;--stripe-2:#ecf5ff}
+    .card[data-plane="a320"]{--body:#eef5ff;--body-dark:#b8d6ea;--stripe:#1f6fd1;--stripe-dark:#123f77;--stripe-2:#f2f6ff}
+    .card[data-plane="b737"]{--body:#f4efe4;--body-dark:#c8bea9;--stripe:#f2a900;--stripe-dark:#986900;--stripe-2:#ffffff}
+    .card[data-plane="a330"]{--body:#eef2f8;--body-dark:#c2cee0;--stripe:#1f86c8;--stripe-dark:#0f4f76;--stripe-2:#ffffff}
+    .card[data-plane="b747"]{--body:#f2f5fb;--body-dark:#c4d4ec;--stripe:#1e72b6;--stripe-dark:#0d3f68;--stripe-2:#ffffff}
+    .card[data-plane="a380"]{--body:#eff2f7;--body-dark:#c0ccdb;--stripe:#5f6ed6;--stripe-dark:#3d49a7;--stripe-2:#ffffff}
+    .card[data-plane="concorde"]{--body:#fbfbfd;--body-dark:#ccd5e7;--stripe:#d41f26;--stripe-dark:#7a1014;--stripe-2:#2b3f66}
+    .card[data-plane="f16"]{--body:#e8eef7;--body-dark:#adbed6;--stripe:#3d4f73;--stripe-dark:#263349;--stripe-2:#dfe8f5}
+    .card[data-plane="f22"]{--body:#dfe9f6;--body-dark:#aab9d0;--stripe:#2a466d;--stripe-dark:#14233a;--stripe-2:#e8f0ff}
+    .card[data-plane="sr71"]{--body:#bfc8d6;--body-dark:#717f93;--stripe:#121b2f;--stripe-dark:#050812;--stripe-2:#e8edf7}
+    .card[data-plane="b2"]{--body:#32353d;--body-dark:#111318;--stripe:#596372;--stripe-dark:#2f3642;--stripe-2:#a6b2c6}
+    .card[data-plane="apache"]{--body:#6d7d52;--body-dark:#404e2e;--stripe:#b4c97a;--stripe-dark:#76884f;--stripe-2:#e7f0bf}
+    .card[data-plane="spaceplane"]{--body:#e9e7ff;--body-dark:#bcb7ef;--stripe:#ff6fd6;--stripe-dark:#8b2f6f;--stripe-2:#ffffff}
+  </style>
+</head>
+<body>
+  <div class="tag">GLEX Flight Sim</div>
+  <h1>Choose Your Aircraft</h1>
+  <p class="sub">All planes are inside the flight sim only. Nothing here changes the main Glex site.</p>
+  <div class="grid">
+    <div class="card" data-plane="cessna" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Cessna 172</div><div class="meta">Trainer • Light</div><div class="desc">Easy takeoff and landing practice.</div></div>
+    <div class="card" data-plane="a320" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Airbus A320</div><div class="meta">Airbus • Jetliner</div><div class="desc">Smooth stable Airbus style.</div></div>
+    <div class="card" data-plane="b737" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Boeing 737</div><div class="meta">Boeing • Narrow-body</div><div class="desc">Short-haul classic airliner.</div></div>
+    <div class="card" data-plane="a330" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Airbus A330</div><div class="meta">Airbus • Wide-body</div><div class="desc">Long-range Airbus look.</div></div>
+    <div class="card" data-plane="b747" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Boeing 747</div><div class="meta">Boeing • Jumbo</div><div class="desc">Iconic queen of the skies.</div></div>
+    <div class="card" data-plane="a380" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Airbus A380</div><div class="meta">Airbus • Superjumbo</div><div class="desc">Huge Airbus superjumbo shape.</div></div>
+    <div class="card" data-plane="concorde" onclick="pick(this)"><div class="art"><div class="body" style="left:18px;top:31px;width:86px;height:12px;border-radius:12px;transform:skewX(-18deg)"></div><div class="nose" style="left:100px;top:31px;width:9px;height:12px"></div><div class="tail" style="left:13px;top:23px;width:10px;height:20px"></div><div class="wing" style="left:31px;top:36px;width:57px;height:10px;border-radius:6px"></div><div class="wing r" style="left:34px;top:45px;width:48px;height:8px;border-radius:6px"></div><div class="livery" style="left:26px;top:34px;width:66px;background:linear-gradient(90deg,transparent 0,#d41f26 18%,#f4f8ff 47%,#d41f26 76%,transparent 100%)"></div><div class="livery alt" style="left:28px;top:40px;width:60px;background:linear-gradient(90deg,transparent 0,#132e5d 20%,#f4f8ff 49%,#132e5d 78%,transparent 100%)"></div></div><div class="name">Concorde</div><div class="meta">Sonic • Delta Wing</div><div class="desc">Slim, pointed, more Concorde-like.</div></div>
+    <div class="card" data-plane="f16" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">F-16 Falcon</div><div class="meta">Fighter • Fast</div><div class="desc">Maneuverable fighter jet.</div></div>
+    <div class="card" data-plane="f22" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing"></div><div class="wing r"></div><div class="engine e1"></div><div class="engine e2"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">F-22 Raptor</div><div class="meta">Stealth • Advanced</div><div class="desc">Stealth fighter with blue-gray style.</div></div>
+    <div class="card" data-plane="sr71" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing" style="left:24px;top:28px;width:70px;height:9px"></div><div class="wing r" style="left:24px;top:46px;width:70px;height:9px"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">SR-71 Blackbird</div><div class="meta">Recon • Extreme</div><div class="desc">Black, sharp, very fast.</div></div>
+    <div class="card" data-plane="b2" onclick="pick(this)"><div class="art"><div class="body" style="left:28px;top:31px;width:68px;height:15px;border-radius:10px;transform:skewX(-28deg)"></div><div class="wing" style="left:6px;top:24px;width:96px;height:18px;border-radius:14px;transform:skewX(-26deg)"></div><div class="wing r" style="left:6px;top:46px;width:96px;height:18px;border-radius:14px;transform:skewX(26deg)"></div><div class="livery" style="left:23px;top:36px;width:72px;background:linear-gradient(90deg,transparent 0,#94a0b4 16%,#ffffff 47%,#94a0b4 78%,transparent 100%)"></div></div><div class="name">B-2 Spirit</div><div class="meta">Bomber • Stealth</div><div class="desc">Flying wing bomber silhouette.</div></div>
+    <div class="card" data-plane="apache" onclick="pick(this)"><div class="art"><div class="body" style="left:42px;top:28px;width:34px;height:18px;border-radius:50%"></div><div class="wing" style="left:34px;top:30px;width:56px;height:6px;border-radius:999px;transform:none"></div><div class="wing r" style="left:45px;top:16px;width:8px;height:52px;border-radius:999px;transform:none"></div><div class="livery" style="left:39px;top:33px;width:40px;background:linear-gradient(90deg,transparent 0,#b8ca80 20%,#31431f 50%,#b8ca80 82%,transparent 100%)"></div></div><div class="name">Apache</div><div class="meta">Helicopter • Hover</div><div class="desc">Helicopter with a rotor cross.</div></div>
+    <div class="card" data-plane="spaceplane" onclick="pick(this)"><div class="art"><div class="body"></div><div class="nose"></div><div class="tail"></div><div class="wing" style="left:34px;top:29px;width:54px;height:10px"></div><div class="wing r" style="left:34px;top:41px;width:54px;height:10px"></div><div class="livery"></div><div class="livery alt"></div></div><div class="name">Space Plane X</div><div class="meta">Experimental • High speed</div><div class="desc">Futuristic experimental craft.</div></div>
+  </div>
+  <div class="liveries">
+    <div class="liveries-head"><span>Pick Livery</span><span id="liveryState">Pick an aircraft first</span></div>
+    <div class="livery-row" id="liveryRow">
+      <button class="livery-btn" data-livery="airchina" onclick="pickLivery(this)">Air China</button>
+      <button class="livery-btn" data-livery="qantas" onclick="pickLivery(this)">Qantas</button>
+      <button class="livery-btn" data-livery="british" onclick="pickLivery(this)">British Airways</button>
+      <button class="livery-btn" data-livery="emirates" onclick="pickLivery(this)">Emirates</button>
+      <button class="livery-btn" data-livery="lufthansa" onclick="pickLivery(this)">Lufthansa</button>
+      <button class="livery-btn" data-livery="american" onclick="pickLivery(this)">American Airlines</button>
+      <button class="livery-btn" data-livery="united" onclick="pickLivery(this)">United</button>
+      <button class="livery-btn" data-livery="delta" onclick="pickLivery(this)">Delta</button>
+      <button class="livery-btn" data-livery="singapore" onclick="pickLivery(this)">Singapore Airlines</button>
+      <button class="livery-btn" data-livery="airfrance" onclick="pickLivery(this)">Air France</button>
+    </div>
+  </div>
+  <div class="actions"><button class="fly" id="flyBtn" type="button" onclick="goFly()">Fly</button><a class="back" href="glex-flight-sim-fresh.html">Back</a></div>
+  <div class="note">GLEX Flight Sim</div>
+  <script>
+    const LIVERY_COLORS = {
+      airchina:  {stripe:'#E60026',stripe2:'#D4A017',stripeDark:'#8a0015'},
+      qantas:    {stripe:'#E40000',stripe2:'#ffffff',stripeDark:'#8b0000'},
+      british:   {stripe:'#075AAA',stripe2:'#CF0A2C',stripeDark:'#033d76'},
+      emirates:  {stripe:'#C8102E',stripe2:'#D4A827',stripeDark:'#7a0a1c'},
+      lufthansa: {stripe:'#F9BA00',stripe2:'#05164D',stripeDark:'#c69400'},
+      american:  {stripe:'#0078D2',stripe2:'#C8102E',stripeDark:'#004b84'},
+      united:    {stripe:'#002244',stripe2:'#D4AF37',stripeDark:'#001128'},
+      delta:     {stripe:'#C01933',stripe2:'#003366',stripeDark:'#780f1f'},
+      singapore: {stripe:'#00337F',stripe2:'#D4AF37',stripeDark:'#001e4d'},
+      airfrance: {stripe:'#002395',stripe2:'#ED2939',stripeDark:'#001160'}
+    };
+    let selected='';
+    let selectedLivery='airchina';
+    let menuCtx=null,menuGain=null,menuOscA=null,menuOscB=null;
+
+    function initMenuMusic(){
+      if(menuCtx) return;
+      const AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC) return;
+      menuCtx=new AC();
+      menuGain=menuCtx.createGain();
+      menuGain.gain.value=0.018;
+      menuGain.connect(menuCtx.destination);
+      menuOscA=menuCtx.createOscillator();
+      menuOscA.type='triangle';
+      menuOscA.frequency.value=174.61;
+      menuOscA.connect(menuGain);
+      menuOscA.start();
+      menuOscB=menuCtx.createOscillator();
+      menuOscB.type='sine';
+      menuOscB.frequency.value=261.63;
+      menuOscB.connect(menuGain);
+      menuOscB.start();
+      let step=0;
+      setInterval(()=>{
+        if(!menuCtx||document.hidden) return;
+        const seq=[174.61,196,220,196,174.61,164.81];
+        const base=seq[step%seq.length];
+        menuOscA.frequency.setTargetAtTime(base,menuCtx.currentTime,0.35);
+        menuOscB.frequency.setTargetAtTime(base*1.5,menuCtx.currentTime,0.35);
+        step++;
+      },1600);
+    }
+
+    function startMenuMusic(){
+      initMenuMusic();
+      if(!menuCtx||!menuGain) return;
+      const raiseGain=()=>menuGain.gain.setTargetAtTime(0.018,menuCtx.currentTime,0.12);
+      if(menuCtx.state==='suspended'){
+        menuCtx.resume().then(raiseGain).catch(()=>{});
+      }else{
+        raiseGain();
+      }
+    }
+
+    function stopMenuMusic(){
+      if(menuCtx&&menuGain) menuGain.gain.setTargetAtTime(0,menuCtx.currentTime,0.12);
+    }
+    function pick(card){
+      startMenuMusic();
+      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected');
+      selected=card.dataset.plane;
+      document.getElementById('flyBtn').classList.add('active');
+      document.getElementById('liveryState').textContent='Aircraft: '+card.querySelector('.name').textContent;
+      // re-apply current livery colors to newly selected card
+      const active=document.querySelector('.livery-btn.active');
+      if(active) applyColors(card, active.dataset.livery);
+    }
+    function applyColors(card, livery){
+      const c=LIVERY_COLORS[livery];
+      if(!c) return;
+      card.style.setProperty('--stripe',c.stripe);
+      card.style.setProperty('--stripe-dark',c.stripeDark);
+      card.style.setProperty('--stripe-2',c.stripe2);
+    }
+    function pickLivery(button){
+      startMenuMusic();
+      document.querySelectorAll('.livery-btn').forEach(btn=>btn.classList.remove('active'));
+      button.classList.add('active');
+      selectedLivery=button.dataset.livery;
+      const card=document.querySelector('.card.selected');
+      if(card) applyColors(card, selectedLivery);
+      document.getElementById('liveryState').textContent='Livery: '+button.textContent;
+    }
+    function goFly(){if(!selected)return;stopMenuMusic();location.href='flight-world-3-fresh.html?plane='+encodeURIComponent(selected)+'&livery='+encodeURIComponent(selectedLivery)}
+
+    window.addEventListener('pointerdown',startMenuMusic,{once:false});
+    window.addEventListener('keydown',startMenuMusic,{once:false});
+    document.body.addEventListener('click',startMenuMusic,{once:false});
+    window.addEventListener('beforeunload',stopMenuMusic);
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)stopMenuMusic();else startMenuMusic();});
+  </script>
+</body>
+</html>

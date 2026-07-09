@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLEX Flight World 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:#06101c;color:#eef6ff;font-family:'Space Grotesk',sans-serif}
+    body{background:
+      radial-gradient(circle at 50% 0%, rgba(79,161,255,.24), transparent 38%),
+      linear-gradient(180deg,#091b31 0%,#0e2b4c 36%,#7ab8e6 100%)}
+    canvas{display:block}
+    #app{position:fixed;inset:0}
+    #world{position:absolute;inset:0}
+    .hud{position:fixed;z-index:20;background:rgba(5,17,31,.78);backdrop-filter:blur(10px);border:1px solid rgba(115,181,255,.2);box-shadow:0 18px 34px rgba(0,0,0,.28);border-radius:16px}
+    .smallBtn{appearance:none;border:1px solid rgba(115,181,255,.18);background:rgba(8,22,39,.82);color:#dceeff;font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.52rem .72rem;font-size:.62rem;cursor:pointer;transition:transform .15s,border-color .15s,background .15s;user-select:none}
+    .smallBtn:hover,.smallBtn.active{transform:translateY(-1px);border-color:rgba(115,181,255,.45);background:rgba(31,111,209,.92)}
+    #topLeft{left:.7rem;top:.7rem;padding:.7rem .8rem;display:grid;gap:.35rem;min-width:175px}
+    #topRight{right:.7rem;top:.7rem;display:flex;gap:.45rem;padding:.55rem}
+    #leftBar{position:fixed;left:.7rem;top:5rem;bottom:1rem;width:148px;padding:.7rem;display:grid;gap:.45rem;align-content:start;overflow:auto}
+    #rightBar{position:fixed;right:.7rem;top:5rem;bottom:1rem;width:148px;padding:.7rem;display:grid;gap:.45rem;align-content:start;overflow:auto}
+    #centerPanel{position:fixed;inset:0;z-index:30;background:rgba(2,8,18,.94);backdrop-filter:blur(14px);display:grid;grid-template-rows:auto 1fr auto auto;gap:.7rem;padding:1.2rem 1.4rem 1.4rem}
+    #spawnHeader{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    #closeSpawnBtn{appearance:none;border:1px solid rgba(115,181,255,.28);background:rgba(8,22,39,.7);color:#dceeff;font-size:1.2rem;width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;flex-shrink:0}
+    #closeSpawnBtn:hover{background:rgba(31,111,209,.9);border-color:rgba(115,181,255,.6)}
+    #spawnActions{display:flex;gap:.8rem;align-items:center;justify-content:center;flex-wrap:wrap;padding-top:.2rem}
+    #flyNowBtn{appearance:none;border:none;border-radius:999px;padding:.9rem 2.8rem;font-family:'Orbitron',sans-serif;font-size:1rem;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#2d79da 0%,#0d3c8a 100%);box-shadow:0 10px 24px rgba(21,101,192,.45);cursor:pointer}
+    #flyNowBtn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(21,101,192,.6)}
+    #backSelectBtn{appearance:none;border:1px solid rgba(106,182,255,.3);background:rgba(10,27,50,.86);color:#d3e8fb;border-radius:999px;padding:.9rem 1.8rem;font-family:'Orbitron',sans-serif;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+    #backSelectBtn:hover{border-color:rgba(106,182,255,.55);color:#fff}
+    #mapWrap{position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0e2a44,#0a1730);border:1px solid rgba(115,181,255,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+    #map{width:100%;height:100%;display:block;background:linear-gradient(180deg,#0c2a47,#173f61 48%,#72a8d0 100%)}
+    .title{font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase;font-size:.95rem;color:#edf6ff}
+    .sub{color:#b7d4ec;font-size:.82rem;line-height:1.5}
+    .pillRow{display:flex;flex-wrap:wrap;gap:.45rem}
+    .pill{padding:.38rem .58rem;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(115,181,255,.12);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#e7f4ff}
+    #spawnList{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.42rem}
+    .airportBtn{appearance:none;border:1px solid rgba(115,181,255,.18);background:rgba(8,22,39,.78);color:#dceeff;font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.55rem .4rem;font-size:.6rem;cursor:pointer}
+    .airportBtn.active{background:rgba(31,111,209,.92);border-color:rgba(115,181,255,.5)}
+    #footer{position:fixed;left:50%;bottom:.2rem;transform:translateX(-50%);z-index:14;font-size:.65rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(237,246,255,.45);pointer-events:none}
+    #infoModal{position:fixed;inset:0;background:rgba(2,8,16,.74);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:40;padding:1rem}
+    #infoModal.show{display:flex}
+    #infoCard{width:min(640px,100%);background:linear-gradient(180deg,rgba(12,28,48,.98),rgba(6,16,27,.98));border:1px solid rgba(115,181,255,.2);border-radius:22px;padding:1rem 1rem 1.1rem;box-shadow:0 26px 60px rgba(0,0,0,.38)}
+    #infoCard h2{font-family:'Orbitron',sans-serif;font-size:1.15rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem}
+    #infoCard ul{padding-left:1.1rem;color:#c7def2;line-height:1.6;display:grid;gap:.4rem;font-size:.94rem}
+    .closeRow{display:flex;justify-content:flex-end;margin-top:.9rem}
+    .closeRow button{padding:.68rem 1.1rem;border-radius:12px;border:1px solid rgba(115,181,255,.2);background:rgba(8,22,39,.8);color:#edf6ff;font-family:'Orbitron',sans-serif;letter-spacing:.12em;text-transform:uppercase}
+    .chip{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#dceeff}
+    #controlsNote{font-size:.78rem;line-height:.45rem;color:#b8d4ec}
+    @media (max-width:900px){
+      #centerPanel{width:calc(100vw - 18rem);height:min(62vh,560px)}
+      #leftBar,#rightBar{width:86px}
+      .smallBtn{font-size:.56rem;padding:.48rem .35rem}
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <canvas id="world"></canvas>
+  </div>
+
+  <div id="topLeft" class="hud">
+    <div class="title" id="planeName">GLEX Flight World</div>
+    <div class="chip" id="liveryName">Livery: Classic</div>
+    <div class="chip" id="spawnName">Spawn: choose airport</div>
+  </div>
+
+  <div id="topRight" class="hud">
+    <button class="smallBtn" id="pauseBtn">Pause</button>
+    <button class="smallBtn" id="viewBtn">View</button>
+    <button class="smallBtn" id="infoBtn">Info</button>
+  </div>
+
+  <div id="leftBar" class="hud"></div>
+
+  <div id="rightBar" class="hud">
+    <button class="smallBtn" id="throttleUp">Throttle +</button>
+    <button class="smallBtn" id="throttleDown">Throttle -</button>
+    <button class="smallBtn" id="flapsBtn">Flaps</button>
+    <button class="smallBtn" id="gearBtn">Gear</button>
+    <button class="smallBtn" id="reverseBtn">Reverse</button>
+    <button class="smallBtn" id="spoilerBtn">Spoilers</button>
+  </div>
+
+  <div id="centerPanel">
+    <div id="spawnHeader">
+      <div>
+        <div class="title">Select Spawn Airport</div>
+        <div class="sub">Click an airport on the map or the list below, then press Start Flying.</div>
+      </div>
+      <button id="closeSpawnBtn" title="Close">&#x2715;</button>
+    </div>
+    <div id="mapWrap"><canvas id="map" width="1200" height="760"></canvas></div>
+    <div id="spawnList"></div>
+    <div id="spawnActions">
+      <a class="" id="backSelectBtn" href="flight-select-fresh.html">&#8592; Back</a>
+      <button id="flyNowBtn">&#9992; Start Flying</button>
+    </div>
+  </div>
+
+  <div id="footer">GLEX Flight Sim</div>
+
+  <div id="infoModal">
+    <div id="infoCard">
+      <h2>Controls</h2>
+      <ul>
+        <li>Click an airport on the map or in the list.</li>
+        <li>Use the right-side buttons for throttle, flaps, gear, reverse, and spoilers.</li>
+        <li>Y toggles cockpit view, Q pauses, 1-4 changes flaps, Z/X changes throttle, C holds reverse.</li>
+        <li>This page keeps the map local so it stays visible and clickable.</li>
+      </ul>
+      <div class="closeRow"><button id="closeInfoBtn">Close</button></div>
+    </div>
+  </div>
+
+  <script>
+    const params=new URLSearchParams(location.search);
+    const plane=params.get('plane')||'cessna';
+    const livery=params.get('livery')||'classic';
+    const AIRPORTS=[
+      {name:'JFK',lat:40.6413,lon:-73.7781},{name:'LAX',lat:33.9416,lon:-118.4085},{name:'Heathrow',lat:51.47,lon:-0.4543},{name:'Dubai',lat:25.2532,lon:55.3657},{name:'Tokyo',lat:35.5494,lon:139.7798},{name:'Sydney',lat:-33.9399,lon:151.1753},{name:'Paris',lat:49.0097,lon:2.5479},{name:'Sao Paulo',lat:-23.6273,lon:-46.6566},{name:'Cape Town',lat:-33.97,lon:18.597},{name:'Reykjavik',lat:63.985,lon:-22.6056}
+    ];
+    const PLANE_NAMES={cessna:'Cessna 172',a320:'Airbus A320',b737:'Boeing 737',a330:'Airbus A330',b747:'Boeing 747',a380:'Airbus A380',concorde:'Concorde',f16:'F-16 Falcon',f22:'F-22 Raptor',sr71:'SR-71 Blackbird',b2:'B-2 Spirit',apache:'Apache',spaceplane:'Space Plane X'};
+    const LIVERY_NAMES={classic:'Classic',blue:'Blue',red:'Red',stealth:'Stealth',sunset:'Sunset'};
+    const LIVERY_SET={
+      classic:{body:'#dbe6f1',stripe:'#3f86ff',accent:'#ffffff'},
+      blue:{body:'#eef5ff',stripe:'#1f6fd1',accent:'#dff0ff'},
+      red:{body:'#fff1f1',stripe:'#d41f26',accent:'#ffd8d8'},
+      stealth:{body:'#2e3138',stripe:'#626b77',accent:'#a8b2bf'},
+      sunset:{body:'#f9efe5',stripe:'#ff8a4c',accent:'#ffd7b4'}
+    };
+    let selectedAirport=AIRPORTS[0];
+    let viewCockpit=false;
+    let paused=false;
+    let throttle=0.24;
+    let flaps=1;
+    let gearDown=true;
+    let reverse=false;
+    let spoilers=false;
+    let altitude=0;
+    let speed=0;
+    let heading=0;
+    let tick=0;
+    const world=document.getElementById('world');
+    const ctx=world.getContext('2d');
+    const map=document.getElementById('map');
+    const mapCtx=map.getContext('2d');
+    const spawnList=document.getElementById('spawnList');
+    const leftBar=document.getElementById('leftBar');
+    const planeName=document.getElementById('planeName');
+    const liveryName=document.getElementById('liveryName');
+    const spawnName=document.getElementById('spawnName');
+    const mapWrap=document.getElementById('mapWrap');
+    const infoModal=document.getElementById('infoModal');
+    const controls={
+      throttleUp:document.getElementById('throttleUp'),
+      throttleDown:document.getElementById('throttleDown'),
+      flapsBtn:document.getElementById('flapsBtn'),
+      gearBtn:document.getElementById('gearBtn'),
+      reverseBtn:document.getElementById('reverseBtn'),
+      spoilerBtn:document.getElementById('spoilerBtn'),
+      pauseBtn:document.getElementById('pauseBtn'),
+      viewBtn:document.getElementById('viewBtn'),
+      infoBtn:document.getElementById('infoBtn')
+    };
+    const markers=[];
+    function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+    function fit(){
+      const dpr=Math.min(devicePixelRatio||1,2);
+      world.width=innerWidth*dpr; world.height=innerHeight*dpr; world.style.width=innerWidth+'px'; world.style.height=innerHeight+'px';
+      map.width=map.clientWidth*dpr; map.height=map.clientHeight*dpr;
+      drawWorld(); drawMap();
+    }
+    function setLabels(){
+      planeName.textContent=PLANE_NAMES[plane]||'GLEX Flight World';
+      liveryName.textContent='Livery: '+(LIVERY_NAMES[livery]||'Classic');
+      spawnName.textContent='Spawn: '+selectedAirport.name;
+    }
+    function toXY(lat,lon,w,h,pad=0.08){
+      const x=((lon+180)/360)*(w*(1-pad*2))+w*pad;
+      const y=((90-lat)/180)*(h*(1-pad*2))+h*pad;
+      return {x,y};
+    }
+    function drawWorld(){
+      const w=world.width,h=world.height;
+      const dpr=Math.min(devicePixelRatio||1,2);
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.clearRect(0,0,w,h);
+      ctx.scale(dpr,dpr);
+      const W=innerWidth,H=innerHeight;
+      const sky=ctx.createLinearGradient(0,0,0,H);
+      sky.addColorStop(0,'#0d223b'); sky.addColorStop(.55,'#5ba6df'); sky.addColorStop(1,'#d7f0ff');
+      ctx.fillStyle=sky; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='rgba(255,255,255,.18)';
+      for(let i=0;i<28;i++){
+        const x=(i*97+tick*12)%W;
+        const y=(i*57+Math.sin((tick+i)*.015)*18)%H;
+        ctx.beginPath(); ctx.arc(x,y,1.5+(i%3)*.3,0,Math.PI*2); ctx.fill();
+      }
+      const ocean=ctx.createLinearGradient(0,H*.35,0,H);
+      ocean.addColorStop(0,'rgba(8,48,82,.15)'); ocean.addColorStop(1,'rgba(9,40,70,.42)');
+      ctx.fillStyle=ocean; ctx.fillRect(0,H*.36,W,H*.64);
+      const continents=[
+        [[110,180],[240,130],[390,160],[470,240],[430,330],[300,360],[190,320],[120,250]],
+        [[560,120],[720,100],[880,180],[840,320],[710,350],[610,280]],
+        [[250,470],[390,430],[520,470],[480,610],[330,630],[230,560]],
+        [[700,440],[860,420],[1000,500],[960,650],[790,680],[690,580]],
+        [[1040,130],[1130,180],[1100,270],[1020,230]]
+      ];
+      continents.forEach((poly,i)=>{
+        ctx.beginPath();
+        ctx.moveTo(poly[0][0],poly[0][1]);
+        for(let j=1;j<poly.length;j++) ctx.lineTo(poly[j][0],poly[j][1]);
+        ctx.closePath();
+        ctx.fillStyle=['#2e7a3f','#2c7140','#2d7443','#2b6f3d','#3a8450'][i%5];
+        ctx.fill();
+        ctx.fillStyle='rgba(0,0,0,.08)';
+        ctx.fill();
+      });
+      ctx.strokeStyle='rgba(255,255,255,.14)'; ctx.lineWidth=1;
+      for(let x=0;x<=W;x+=120){ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();}
+      for(let y=0;y<=H;y+=120){ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();}
+      ctx.fillStyle='rgba(255,220,140,.9)';
+      AIRPORTS.forEach(a=>{
+        const p=toXY(a.lat,a.lon,W,H,0.04);
+        ctx.beginPath(); ctx.arc(p.x,p.y,7,0,Math.PI*2); ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=2; ctx.stroke();
+        ctx.fillStyle='#06101c'; ctx.font='bold 13px Space Grotesk, sans-serif'; ctx.fillText(a.name,p.x+10,p.y-8);
+      });
+      drawPlaneSilhouette(W,H);
+    }
+    function drawPlaneSilhouette(W,H){
+      const style=LIVERY_SET[livery]||LIVERY_SET.classic;
+      const px=W*0.5, py=H*0.58;
+      ctx.save();
+      ctx.translate(px,py);
+      const bodyLen={cessna:110,a320:190,b737:180,a330:205,b747:235,a380:250,concorde:210,f16:125,f22:130,sr71:180,b2:170,apache:110,spaceplane:160}[plane]||160;
+      const wingSpan={cessna:90,a320:180,b737:170,a330:190,b747:220,a380:235,concorde:160,f16:120,f22:128,sr71:200,b2:280,apache:100,spaceplane:165}[plane]||160;
+      const angle=-0.2 + Math.sin(tick/120)*0.02;
+      ctx.rotate(angle);
+      ctx.fillStyle=style.body;
+      ctx.strokeStyle=style.stripe;
+      ctx.lineWidth=6;
+      ctx.lineCap='round';
+      // fuselage
+      ctx.beginPath();
+      ctx.roundRect(-bodyLen/2,-18,bodyLen,36,18);
+      ctx.fill();
+      // nose
+      ctx.beginPath();
+      ctx.moveTo(bodyLen/2-16,-18); ctx.lineTo(bodyLen/2+28,0); ctx.lineTo(bodyLen/2-16,18); ctx.closePath(); ctx.fill();
+      // tail
+      ctx.beginPath();
+      ctx.moveTo(-bodyLen/2+4,-18); ctx.lineTo(-bodyLen/2-18,-48); ctx.lineTo(-bodyLen/2-10,18); ctx.closePath(); ctx.fill();
+      // wings
+      ctx.beginPath(); ctx.moveTo(-20,0); ctx.lineTo(-wingSpan/2,-40); ctx.lineTo(20,-4); ctx.lineTo(wingSpan/2,-40); ctx.lineTo(24,0); ctx.lineTo(wingSpan/2,34); ctx.lineTo(20,0); ctx.lineTo(-20,0); ctx.closePath(); ctx.fill();
+      // stripe
+      ctx.strokeStyle=style.accent;
+      ctx.beginPath(); ctx.moveTo(-bodyLen/2+24,-5); ctx.lineTo(bodyLen/2-14,-5); ctx.stroke();
+      // cockpit
+      ctx.fillStyle='rgba(5,15,26,.8)'; ctx.beginPath(); ctx.ellipse(bodyLen/2-42,-4,14,7,0,0,Math.PI*2); ctx.fill();
+      if(plane==='apache'){
+        ctx.strokeStyle=style.stripe; ctx.lineWidth=4;
+        ctx.beginPath(); ctx.moveTo(-40,-40); ctx.lineTo(40,-40); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0,-70); ctx.lineTo(0,10); ctx.stroke();
+      }
+      if(plane==='b2'){
+        ctx.beginPath(); ctx.moveTo(-120,-8); ctx.lineTo(120,-8); ctx.lineTo(92,34); ctx.lineTo(-92,34); ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
+    }
+    function drawMap(){
+      const dpr=Math.min(devicePixelRatio||1,2);
+      const W=map.width/dpr,H=map.height/dpr;
+      mapCtx.setTransform(1,0,0,1,0,0);
+      mapCtx.clearRect(0,0,map.width,map.height);
+      mapCtx.scale(dpr,dpr);
+      mapCtx.fillStyle='rgba(0,0,0,.1)'; mapCtx.fillRect(0,0,W,H);
+      const ocean=mapCtx.createLinearGradient(0,0,0,H);
+      ocean.addColorStop(0,'#123a5e'); ocean.addColorStop(1,'#0d2943');
+      mapCtx.fillStyle=ocean; mapCtx.fillRect(0,0,W,H);
+      mapCtx.fillStyle='rgba(65,122,74,.94)';
+      const continents=[
+        [[80,150],[210,105],[344,124],[418,198],[390,290],[286,318],[175,285],[95,218]],
+        [[530,78],[678,72],[824,152],[793,286],[662,321],[566,255]],
+        [[206,384],[350,344],[474,392],[430,540],[280,556],[182,488]],
+        [[650,352],[806,334],[942,406],[915,578],[748,595],[642,490]]
+      ];
+      continents.forEach(poly=>{
+        mapCtx.beginPath();
+        mapCtx.moveTo(poly[0][0],poly[0][1]);
+        for(let i=1;i<poly.length;i++) mapCtx.lineTo(poly[i][0],poly[i][1]);
+        mapCtx.closePath();
+        mapCtx.fill();
+      });
+      mapCtx.strokeStyle='rgba(255,255,255,.16)'; mapCtx.lineWidth=1;
+      for(let x=0;x<=W;x+=90){mapCtx.beginPath(); mapCtx.moveTo(x,0); mapCtx.lineTo(x,H); mapCtx.stroke();}
+      for(let y=0;y<=H;y+=90){mapCtx.beginPath(); mapCtx.moveTo(0,y); mapCtx.lineTo(W,y); mapCtx.stroke();}
+      AIRPORTS.forEach(a=>{
+        const p=toXY(a.lat,a.lon,W,H,0.04);
+        const selected=a.name===selectedAirport.name;
+        mapCtx.beginPath(); mapCtx.arc(p.x,p.y,selected?9:7,0,Math.PI*2);
+        mapCtx.fillStyle=selected?'#ffe08a':'#ff6a6f';
+        mapCtx.fill();
+        mapCtx.strokeStyle='#fff'; mapCtx.lineWidth=2; mapCtx.stroke();
+      });
+    }
+    function makeButtons(){
+      leftBar.innerHTML='';
+      AIRPORTS.forEach(a=>{
+        const btn=document.createElement('button');
+        btn.className='smallBtn airportBtn'+(a.name===selectedAirport.name?' active':'');
+        btn.textContent=a.name;
+        btn.addEventListener('click',()=>selectAirport(a));
+        spawnList.appendChild(btn);
+      });
+      const quicks=[
+        ['Z/X',()=>{}],
+        ['C reverse',()=>{}],
+        ['T gear',()=>{}],
+        ['Y view',()=>{}],
+        ['Q pause',()=>{}]
+      ];
+      quicks.forEach(([label])=>{
+        const b=document.createElement('div');
+        b.className='pill';
+        b.textContent=label;
+        leftBar.appendChild(b);
+      });
+    }
+    function selectAirport(a){
+      selectedAirport=a;
+      document.querySelectorAll('.airportBtn').forEach(btn=>btn.classList.toggle('active',btn.textContent===a.name));
+      setLabels();
+      drawMap();
+    }
+    function resizeBars(){
+      const mapWidth=mapWrap.clientWidth;
+      const mapHeight=mapWrap.clientHeight;
+      map.width=mapWidth*Math.min(devicePixelRatio||1,2);
+      map.height=mapHeight*Math.min(devicePixelRatio||1,2);
+      drawMap();
+    }
+    function worldLoop(){
+      if(!paused){
+        tick++;
+        speed=Math.max(0,speed+(throttle*5.5-(reverse?2.4:0)-spoilers?.25:0));
+        altitude=Math.max(0,altitude+(throttle*32+(gearDown?0:2)-(selectedAirport.name==='Custom Ground'?0:0)));
+        heading=(heading+0.03)%360;
+      }
+      drawWorld();
+      requestAnimationFrame(worldLoop);
+    }
+    function closeSpawn(){
+      document.getElementById('centerPanel').style.display='none';
+      document.getElementById('spawnName').textContent='Spawn: '+selectedAirport.name;
+    }
+    function init(){
+      document.getElementById('planeName').textContent=PLANE_NAMES[plane]||'GLEX Flight World';
+      document.getElementById('liveryName').textContent='Livery: '+(LIVERY_NAMES[livery]||'Classic');
+      setLabels();
+      makeButtons();
+      resizeBars();
+      fit();
+      selectAirport(AIRPORTS[0]);
+      worldLoop();
+    }
+    function togglePause(){paused=!paused;controls.pauseBtn.textContent=paused?'Resume':'Pause';}
+    function toggleView(){viewCockpit=!viewCockpit;controls.viewBtn.textContent=viewCockpit?'Cockpit':'View';}
+    function cycleFlaps(){flaps=(flaps+1)%5;controls.flapsBtn.classList.add('active');setTimeout(()=>controls.flapsBtn.classList.remove('active'),180);}
+    document.getElementById('closeSpawnBtn').addEventListener('click',closeSpawn);
+    document.getElementById('flyNowBtn').addEventListener('click',closeSpawn);
+    controls.pauseBtn.addEventListener('click',togglePause);
+    controls.viewBtn.addEventListener('click',toggleView);
+    controls.infoBtn.addEventListener('click',()=>infoModal.classList.add('show'));
+    document.getElementById('closeInfoBtn').addEventListener('click',()=>infoModal.classList.remove('show'));
+    infoModal.addEventListener('click',e=>{if(e.target===infoModal)infoModal.classList.remove('show');});
+    controls.throttleUp.addEventListener('click',()=>{throttle=clamp(throttle+.08,0,1);});
+    controls.throttleDown.addEventListener('click',()=>{throttle=clamp(throttle-.08,0,1);});
+    controls.flapsBtn.addEventListener('click',cycleFlaps);
+    controls.gearBtn.addEventListener('click',()=>{gearDown=!gearDown;controls.gearBtn.classList.toggle('active',gearDown);});
+    controls.reverseBtn.addEventListener('click',()=>{reverse=!reverse;controls.reverseBtn.classList.toggle('active',reverse);});
+    controls.spoilerBtn.addEventListener('click',()=>{spoilers=!spoilers;controls.spoilerBtn.classList.toggle('active',spoilers);});
+    window.addEventListener('keydown',e=>{
+      const k=e.key.toLowerCase();
+      if(k==='q')togglePause();
+      if(k==='y')toggleView();
+      if(k==='t'){gearDown=!gearDown;controls.gearBtn.classList.toggle('active',gearDown);} 
+      if(k==='c'){reverse=true;controls.reverseBtn.classList.add('active');}
+      if(k==='z')throttle=clamp(throttle+.05,0,1);
+      if(k==='x')throttle=clamp(throttle-.05,0,1);
+      if(k>='1'&&k<='4'){flaps=Number(k);controls.flapsBtn.classList.add('active');}
+    });
+    window.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='c'){reverse=false;controls.reverseBtn.classList.remove('active');}});
+    window.addEventListener('resize',()=>{fit();resizeBars();});
+    map.addEventListener('click',e=>{
+      const rect=map.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width*1200;
+      const y=(e.clientY-rect.top)/rect.height*760;
+      let best=AIRPORTS[0],score=1e9;
+      AIRPORTS.forEach(a=>{
+        const p=toXY(a.lat,a.lon,1200,760,0.04);
+        const d=Math.hypot(p.x-x,p.y-y);
+        if(d<score){score=d;best=a;}
+      });
+      if(score<60) selectAirport(best);
+    });
+    init();
+  </script>
+</body>
+</html>

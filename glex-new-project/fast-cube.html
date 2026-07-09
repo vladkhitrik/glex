@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fast Cube</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fast-cube.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <main class="wrap">
+    <section class="hero" aria-label="Fast Cube timer">
+      <div class="logo-lockup" aria-label="Fast Cube logo">
+        <img class="web-logo" src="https://static.vecteezy.com/system/resources/thumbnails/059/178/487/small_2x/a-rubik-s-cube-puzzle-a-mathematical-problem-on-a-black-isolated-background-colorful-cubes-they-rotate-them-and-collect-them-with-their-hands-bandung-indonesia-21-03-2025-free-vector.jpg" alt="Fast Cube web logo" />
+        <span class="logo-name">FAST CUBE</span>
+        <span class="logo-tag">Speed Cube Timer</span>
+      </div>
+
+      <div class="actions">
+        <button id="spaceBtn" type="button">Start / Stop (Space)</button>
+        <button id="resetBtn" type="button" class="ghost">Reset (Enter)</button>
+        <button id="pickCubeBtn" type="button" class="ghost">Pick Cube</button>
+        <button id="saveBtn" type="button" class="ghost">Save Time</button>
+        <button id="timesBtn" type="button" class="ghost">Times</button>
+        <a class="how-btn" href="fast-cube-how-to.html">How To Use</a>
+      </div>
+
+      <div class="timer-card" aria-live="polite">
+        <p class="timer-label">Solve Time</p>
+        <p id="timeDisplay" class="time">00:00.000</p>
+        <p id="cubeText" class="state">Cube: Default Cube</p>
+        <p id="stateText" class="state">Ready to solve</p>
+        <div id="savedWrap" class="saved-wrap hidden">
+          <p class="saved-title">Saved Times</p>
+          <ol id="savedTimes" class="saved-times"></ol>
+        </div>
+      </div>
+
+      <div id="cubeDialog" class="cube-dialog hidden" aria-hidden="true">
+        <div class="cube-dialog-card" role="dialog" aria-modal="true" aria-labelledby="cubeDialogTitle">
+          <p id="cubeDialogTitle" class="saved-title">Fast Cube says</p>
+          <p id="cubeDialogText" class="state">Type your cube name:</p>
+          <input id="cubeInput" class="cube-input" type="text" maxlength="40" />
+          <div class="actions">
+            <button id="cubeSaveBtn" type="button">Save Cube</button>
+            <button id="cubeCancelBtn" type="button" class="ghost">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="fast-cube.js"></script>
+</body>
+</html>
