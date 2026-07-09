@@ -33,11 +33,101 @@
         z-index: -2;
         background: #050505 url("assets/mars-landing.jpg") center center / cover no-repeat;
       }
+
+      .mars-corner-rocket {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        width: 78px;
+        height: 78px;
+        z-index: 4;
+        pointer-events: none;
+        animation: marsRocketFly 5.2s ease-in-out infinite;
+        transform-origin: 50% 50%;
+      }
+
+      .mars-corner-rocket .body {
+        position: absolute;
+        left: 26px;
+        top: 16px;
+        width: 28px;
+        height: 42px;
+        border-radius: 50% 50% 40% 40%;
+        background: linear-gradient(180deg, #fff3e9 0%, #ffcfa9 100%);
+        border: 1px solid rgba(118, 52, 24, 0.45);
+      }
+
+      .mars-corner-rocket .window {
+        position: absolute;
+        left: 33px;
+        top: 25px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #7dd2ff;
+        border: 1px solid rgba(8, 63, 104, 0.45);
+      }
+
+      .mars-corner-rocket .fin-left,
+      .mars-corner-rocket .fin-right {
+        position: absolute;
+        top: 40px;
+        width: 11px;
+        height: 17px;
+        background: #d35f28;
+      }
+
+      .mars-corner-rocket .fin-left {
+        left: 18px;
+        clip-path: polygon(100% 0, 0 100%, 100% 100%);
+      }
+
+      .mars-corner-rocket .fin-right {
+        left: 51px;
+        clip-path: polygon(0 0, 0 100%, 100% 100%);
+      }
+
+      .mars-corner-rocket .flame {
+        position: absolute;
+        left: 34px;
+        top: 56px;
+        width: 11px;
+        height: 18px;
+        border-radius: 55% 55% 70% 70%;
+        background: linear-gradient(180deg, #ffd56a 0%, #ff7a1f 100%);
+        animation: marsFlamePulse 0.45s ease-in-out infinite;
+      }
+
+      @keyframes marsRocketFly {
+        0% { transform: translate(0, 0) rotate(-10deg); }
+        50% { transform: translate(-18px, -14px) rotate(-4deg); }
+        100% { transform: translate(0, 0) rotate(-10deg); }
+      }
+
+      @keyframes marsFlamePulse {
+        0% { transform: scaleY(0.85); opacity: 0.9; }
+        100% { transform: scaleY(1.12); opacity: 1; }
+      }
+
+      @media (max-width: 760px) {
+        .mars-corner-rocket {
+          right: 0.55rem;
+          bottom: 0.5rem;
+          transform: scale(0.86);
+        }
+      }
     </style>
-    <link rel="stylesheet" href="styles.css?v=20260709r1" />
+    <link rel="stylesheet" href="styles.css?v=20260709r2" />
   </head>
   <body class="mars-landing">
     <div class="sky-bg" aria-hidden="true"></div>
+    <div class="mars-corner-rocket" aria-hidden="true">
+      <span class="body"></span>
+      <span class="window"></span>
+      <span class="fin-left"></span>
+      <span class="fin-right"></span>
+      <span class="flame"></span>
+    </div>
 
     <main class="landing-main">
       <section class="landing-card" aria-labelledby="landingTitle">
@@ -49,6 +139,6 @@
 
     
     <p class="byline-credit">By Daniil Khitryk and Oscar Rushbrook</p>
-    <script src="app.js?v=20260709r1" defer></script>
+    <script src="app.js?v=20260709r2" defer></script>
   </body>
 </html>
