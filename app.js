@@ -226,7 +226,8 @@ function openDialog(dialog) {
 }
 
 function ensureCornerHomeButton() {
-  if (document.getElementById("cornerHomeBtn") || !document.body) {
+  const hasToolbar = document.querySelector(".toolbar");
+  if (!hasToolbar || document.getElementById("cornerHomeBtn") || !document.body) {
     return;
   }
 
