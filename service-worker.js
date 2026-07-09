@@ -1,4 +1,4 @@
-const CACHE_NAME = "glex-v1";
+const CACHE_NAME = "glex-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -7,6 +7,7 @@ const CORE_ASSETS = [
   "./rocket.html",
   "./boats.html",
   "./drones.html",
+  "./planes.html",
   "./profile.html",
   "./styles.css",
   "./app.js",
@@ -36,19 +37,36 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
+  const requestUrl = new URL(event.request.url);
+  const isHtmlRequest =
+    event.request.mode === "navigate" ||
+    event.request.destination === "document" ||
+    requestUrl.pathname.endsWith(".html");
 
-      return fetch(event.request)
+  if (isHtmlRequest) {
+    event.respondWith(
+      fetch(event.request)
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html"));
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      const networkFetch = fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => cached);
+
+      return cached || networkFetch;
     })
   );
 });
