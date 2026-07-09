@@ -270,6 +270,56 @@ function openDialog(dialog) {
   }
 }
 
+function isHomePage() {
+  const path = window.location.pathname.toLowerCase();
+  return path.endsWith("/home.html") || path === "/home.html";
+}
+
+function ensureCornerHomeButton() {
+  if (isHomePage() || document.getElementById("cornerHomeBtn") || !document.body) {
+    return;
+  }
+
+  const homeBtn = document.createElement("a");
+  homeBtn.id = "cornerHomeBtn";
+  homeBtn.className = "corner-home-btn";
+  homeBtn.href = "home.html";
+  homeBtn.textContent = "Home";
+  homeBtn.setAttribute("aria-label", "Go back to Home page");
+  document.body.appendChild(homeBtn);
+}
+
+function ensureSettingsQuickNav() {
+  if (!settingsDialog || settingsDialog.querySelector(".settings-quick-nav")) {
+    return;
+  }
+
+  const quickNav = document.createElement("div");
+  quickNav.className = "settings-quick-nav";
+
+  const homeLink = document.createElement("a");
+  homeLink.className = "save-btn settings-home-btn";
+  homeLink.href = "home.html";
+  homeLink.textContent = "Back To Home";
+  homeLink.setAttribute("aria-label", "Go back to Home page");
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.className = "close-btn settings-close-btn";
+  closeButton.textContent = "Close";
+  closeButton.addEventListener("click", () => settingsDialog.close());
+
+  quickNav.appendChild(homeLink);
+  quickNav.appendChild(closeButton);
+
+  const heading = settingsDialog.querySelector("h3");
+  if (heading && heading.nextSibling) {
+    settingsDialog.insertBefore(quickNav, heading.nextSibling);
+  } else {
+    settingsDialog.appendChild(quickNav);
+  }
+}
+
 function scrollToPanels() {
   if (contentPanels) {
     contentPanels.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -416,6 +466,8 @@ if (imageInput) {
 loadProfile();
 setActivePanel("learn");
 renderRocketDetailPage();
+ensureCornerHomeButton();
+ensureSettingsQuickNav();
 
 function updateScrollBackgroundEffects() {
   document.body.classList.toggle("hide-launch-glow", window.scrollY > 80);
