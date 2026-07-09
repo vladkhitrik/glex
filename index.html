@@ -34,33 +34,41 @@
         background: #050505 url("assets/mars-landing.jpg") center center / cover no-repeat;
       }
 
-      .mars-corner-rocket {
-        position: fixed;
-        right: 1rem;
-        bottom: 1rem;
-        width: 78px;
-        height: 78px;
-        z-index: 4;
-        pointer-events: none;
-        animation: marsRocketFly 5.2s ease-in-out infinite;
-        transform-origin: 50% 50%;
+      .mars-landing {
+        --rocket-size: 98px;
+        --rocket-orbit-radius: min(42vw, 500px);
       }
 
-      .mars-corner-rocket .body {
+      .mars-orbit-rocket {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: var(--rocket-size);
+        height: var(--rocket-size);
+        margin-left: calc(var(--rocket-size) * -0.5);
+        margin-top: calc(var(--rocket-size) * -0.5);
+        z-index: 6;
+        pointer-events: none;
+        transform-origin: 50% 50%;
+        animation: marsOrbitAround 14s linear infinite;
+      }
+
+      .mars-orbit-rocket .body {
         position: absolute;
-        left: 26px;
-        top: 16px;
-        width: 28px;
-        height: 42px;
+        left: 33px;
+        top: 20px;
+        width: 32px;
+        height: 48px;
         border-radius: 50% 50% 40% 40%;
         background: linear-gradient(180deg, #fff3e9 0%, #ffcfa9 100%);
         border: 1px solid rgba(118, 52, 24, 0.45);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
       }
 
-      .mars-corner-rocket .window {
+      .mars-orbit-rocket .window {
         position: absolute;
-        left: 33px;
-        top: 25px;
+        left: 42px;
+        top: 30px;
         width: 12px;
         height: 12px;
         border-radius: 50%;
@@ -68,40 +76,42 @@
         border: 1px solid rgba(8, 63, 104, 0.45);
       }
 
-      .mars-corner-rocket .fin-left,
-      .mars-corner-rocket .fin-right {
+      .mars-orbit-rocket .fin-left,
+      .mars-orbit-rocket .fin-right {
         position: absolute;
-        top: 40px;
-        width: 11px;
-        height: 17px;
+        top: 47px;
+        width: 12px;
+        height: 18px;
         background: #d35f28;
       }
 
-      .mars-corner-rocket .fin-left {
-        left: 18px;
+      .mars-orbit-rocket .fin-left {
+        left: 24px;
         clip-path: polygon(100% 0, 0 100%, 100% 100%);
       }
 
-      .mars-corner-rocket .fin-right {
-        left: 51px;
+      .mars-orbit-rocket .fin-right {
+        left: 62px;
         clip-path: polygon(0 0, 0 100%, 100% 100%);
       }
 
-      .mars-corner-rocket .flame {
+      .mars-orbit-rocket .flame {
         position: absolute;
-        left: 34px;
-        top: 56px;
-        width: 11px;
-        height: 18px;
+        left: 44px;
+        top: 68px;
+        width: 13px;
+        height: 22px;
         border-radius: 55% 55% 70% 70%;
         background: linear-gradient(180deg, #ffd56a 0%, #ff7a1f 100%);
         animation: marsFlamePulse 0.45s ease-in-out infinite;
       }
 
-      @keyframes marsRocketFly {
-        0% { transform: translate(0, 0) rotate(-10deg); }
-        50% { transform: translate(-18px, -14px) rotate(-4deg); }
-        100% { transform: translate(0, 0) rotate(-10deg); }
+      @keyframes marsOrbitAround {
+        0% { transform: rotate(0deg) translateX(var(--rocket-orbit-radius)) rotate(88deg); }
+        25% { transform: rotate(90deg) translateX(var(--rocket-orbit-radius)) rotate(178deg); }
+        50% { transform: rotate(180deg) translateX(var(--rocket-orbit-radius)) rotate(268deg); }
+        75% { transform: rotate(270deg) translateX(var(--rocket-orbit-radius)) rotate(358deg); }
+        100% { transform: rotate(360deg) translateX(var(--rocket-orbit-radius)) rotate(448deg); }
       }
 
       @keyframes marsFlamePulse {
@@ -109,11 +119,17 @@
         100% { transform: scaleY(1.12); opacity: 1; }
       }
 
+      @media (orientation: landscape) and (min-width: 900px) {
+        .mars-landing {
+          --rocket-size: 112px;
+          --rocket-orbit-radius: min(44vw, 680px);
+        }
+      }
+
       @media (max-width: 760px) {
-        .mars-corner-rocket {
-          right: 0.55rem;
-          bottom: 0.5rem;
-          transform: scale(0.86);
+        .mars-landing {
+          --rocket-size: 74px;
+          --rocket-orbit-radius: min(45vw, 185px);
         }
       }
     </style>
@@ -121,7 +137,7 @@
   </head>
   <body class="mars-landing">
     <div class="sky-bg" aria-hidden="true"></div>
-    <div class="mars-corner-rocket" aria-hidden="true">
+    <div class="mars-orbit-rocket" aria-hidden="true">
       <span class="body"></span>
       <span class="window"></span>
       <span class="fin-left"></span>
