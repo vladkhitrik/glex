@@ -227,7 +227,16 @@ function openDialog(dialog) {
 
 function ensureCornerHomeButton() {
   const hasToolbar = document.querySelector(".toolbar");
-  if (!hasToolbar || document.getElementById("cornerHomeBtn") || !document.body) {
+  const pageName = window.location.pathname.split("/").pop()?.toLowerCase() || "index.html";
+  const allowedPages = new Set([
+    "planes.html",
+    "boats.html",
+    "rockets.html",
+    "rocket.html",
+    "profile.html",
+  ]);
+
+  if (!hasToolbar || !allowedPages.has(pageName) || document.getElementById("cornerHomeBtn") || !document.body) {
     return;
   }
 
