@@ -7,7 +7,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="assets/icons/glex-icon.svg" />
     <link rel="apple-touch-icon" href="assets/icons/glex-icon.svg" />
-    <title>Glex | Profile</title>
+    <title>Glex | Settings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,7 +25,7 @@
           <div class="brand">GLEX</div>
           <div class="brand-tagline">Experience the Air</div>
         </div>
-        <a class="header-profile" href="profile.html" aria-label="Profile page">
+        <a class="header-profile" href="profile.html" aria-label="Go to profile page">
           <img id="headerProfileImage" class="header-avatar" alt="Profile" />
           <span id="headerProfileName" class="header-name">Pilot</span>
         </a>
@@ -37,6 +37,7 @@
         <a class="toolbar-btn" href="drones.html">Drones</a>
         <a class="toolbar-btn" href="planes.html">Planes</a>
         <button class="toolbar-btn" data-action="credits">Credits</button>
+        <a class="toolbar-btn" href="profile.html">Profile</a>
         <a class="toolbar-btn" href="settings.html">Settings</a>
       </nav>
       <button id="infoBtn" class="info-btn" aria-label="Open info" title="Info" aria-haspopup="dialog">Info</button>
@@ -60,49 +61,21 @@
       <button class="close-btn" data-close="creditsDialog">Close</button>
     </dialog>
 
-    <dialog id="settingsDialog" class="modal">
-      <h3>Settings</h3>
-      <label for="fontSizeInput" style="margin-top:0.7rem;display:block">Text Size</label>
-      <div class="settings-row">
-        <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
-        <span id="fontSizeLabel">16px</span>
-        <button class="save-btn" id="resetFontBtn">Reset</button>
-      </div>
-      <button class="save-btn" id="saveFontBtn" style="margin-top:0.8rem">Save</button>
-      <button class="close-btn" data-close="settingsDialog" style="margin-top:0.8rem">Close</button>
-    </dialog>
-
     <main class="topic-main">
       <article class="topic-card profile-page-card">
-        <h1>Your Profile</h1>
+        <h1>Settings</h1>
+        <p class="profile-page-sub">Adjust your reading comfort, then save.</p>
 
-        <div class="profile-page-display">
-          <div class="profile-page-avatar-wrap">
-            <img id="profilePageImage" class="profile-page-avatar" alt="Your profile picture" />
-          </div>
-          <div class="profile-page-info">
-            <p class="profile-page-name" id="profilePageName">Pilot</p>
-            <p class="profile-page-sub">Glex Explorer</p>
-          </div>
+        <label for="fontSizeInput" style="margin-top: 0.8rem; display: block">Text Size</label>
+        <div class="settings-row">
+          <input id="fontSizeInput" type="range" min="12" max="24" step="1" value="16" />
+          <span id="fontSizeLabel">16px</span>
+          <button class="save-btn" id="resetFontBtn" type="button">Reset</button>
         </div>
 
-        <hr class="profile-divider" />
-
-        <form class="profile-form" id="profileForm">
-          <div class="profile-form-field">
-            <label for="nameInput">Username</label>
-            <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name" />
-          </div>
-
-          <div class="profile-form-field">
-            <label for="imageInput">Profile Image</label>
-            <input id="imageInput" type="file" accept="image/*" />
-          </div>
-
-          <div class="modal-actions">
-            <button type="button" id="saveProfileBtn" class="save-btn">Save Profile</button>
-          </div>
-        </form>
+        <div class="modal-actions" style="margin-top: 0.8rem">
+          <button class="save-btn" id="saveFontBtn" type="button">Save</button>
+        </div>
       </article>
     </main>
 

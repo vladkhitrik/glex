@@ -226,27 +226,8 @@ function openDialog(dialog) {
 }
 
 function ensureCornerHomeButton() {
-  const hasToolbar = document.querySelector(".toolbar");
-  const pageName = window.location.pathname.split("/").pop()?.toLowerCase() || "index.html";
-  const allowedPages = new Set([
-    "planes.html",
-    "boats.html",
-    "rockets.html",
-    "rocket.html",
-    "profile.html",
-  ]);
-
-  if (!hasToolbar || !allowedPages.has(pageName) || document.getElementById("cornerHomeBtn") || !document.body) {
-    return;
-  }
-
-  const homeBtn = document.createElement("a");
-  homeBtn.id = "cornerHomeBtn";
-  homeBtn.className = "corner-home-btn";
-  homeBtn.href = "home.html";
-  homeBtn.textContent = "Home";
-  homeBtn.setAttribute("aria-label", "Go back to Home page");
-  document.body.appendChild(homeBtn);
+  // Disabled by request: no floating Home shortcut on pages.
+  return;
 }
 
 function ensureSettingsQuickNav() {
@@ -343,11 +324,13 @@ function runAction(action) {
   }
 
   if (action === "profile") {
-    openDialog(profileDialog);
+    window.location.href = "profile.html";
+    return;
   }
 
   if (action === "settings") {
-    openDialog(settingsDialog);
+    window.location.href = "settings.html";
+    return;
   }
 }
 

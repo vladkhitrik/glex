@@ -22,7 +22,16 @@
     />
     <style>
       body.mars-landing {
-        background: #050505 url("assets/mars-landing.jpg") center top / cover no-repeat fixed !important;
+        position: relative !important;
+        background: #050505 !important;
+      }
+
+      body.mars-landing::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: #050505 url("assets/mars-landing.jpg") center center / cover no-repeat;
       }
     </style>
     <link rel="stylesheet" href="styles.css" />

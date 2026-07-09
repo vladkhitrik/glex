@@ -618,41 +618,7 @@ main {
 }
 
 .corner-home-btn {
-  position: fixed;
-  right: 0.9rem;
-  top: 5.1rem;
-  z-index: 999;
-  border: 2px solid rgba(8, 63, 104, 0.35);
-  border-radius: 999px;
-  background: linear-gradient(180deg, #ffae4f 0%, #f27a1a 100%);
-  box-shadow: 0 8px 18px rgba(10, 26, 48, 0.35), inset 0 1px 0 rgba(255,255,255,0.35);
-  color: var(--ink);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  padding: 0.62rem 1.05rem;
-  text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.corner-home-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(8,63,104,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
-}
-
-.space-theme .corner-home-btn,
-.earth-home .corner-home-btn {
-  color: #fff7ef;
-  border-color: rgba(255, 210, 165, 0.75);
-  background: linear-gradient(180deg, #ffae4f 0%, #f27a1a 100%);
-}
-
-@media (max-width: 760px) {
-  .corner-home-btn {
-    top: auto;
-    bottom: 1rem;
-    right: 0.7rem;
-  }
+  display: none !important;
 }
 
 #bgColorInput {
@@ -1028,10 +994,16 @@ main {
 }
 
 .mars-landing {
-  background:
-    #050505
-    url("assets/mars-landing.jpg")
-    center top / cover no-repeat fixed;
+  position: relative;
+  background: #050505;
+}
+
+.mars-landing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: #050505 url("assets/mars-landing.jpg") center center / cover no-repeat;
 }
 
 .mars-landing .sky-bg {
