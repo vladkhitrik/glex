@@ -28,39 +28,39 @@ const BRIGHTNESS_STEP = 20;
 const DEFAULT_LANGUAGE = "en";
 const LANGUAGE_OPTIONS = [
   { code: "en", label: "English" },
-  { code: "es", label: "Spanish" },
-  { code: "fr", label: "French" },
-  { code: "de", label: "German" },
-  { code: "it", label: "Italian" },
-  { code: "pt", label: "Portuguese" },
-  { code: "nl", label: "Dutch" },
-  { code: "pl", label: "Polish" },
-  { code: "ru", label: "Russian" },
-  { code: "uk", label: "Ukrainian" },
-  { code: "tr", label: "Turkish" },
-  { code: "ar", label: "Arabic" },
-  { code: "he", label: "Hebrew" },
-  { code: "hi", label: "Hindi" },
-  { code: "bn", label: "Bengali" },
-  { code: "zh-CN", label: "Chinese (Simplified)" },
-  { code: "ja", label: "Japanese" },
-  { code: "ko", label: "Korean" },
-  { code: "th", label: "Thai" },
-  { code: "vi", label: "Vietnamese" },
-  { code: "id", label: "Indonesian" },
-  { code: "ms", label: "Malay" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "de", label: "Deutsch" },
+  { code: "it", label: "Italiano" },
+  { code: "pt", label: "Português" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "ru", label: "Русский" },
+  { code: "uk", label: "Українська" },
+  { code: "tr", label: "Türkçe" },
+  { code: "ar", label: "العربية" },
+  { code: "he", label: "עברית" },
+  { code: "hi", label: "हिन्दी" },
+  { code: "bn", label: "বাংলা" },
+  { code: "zh-CN", label: "简体中文" },
+  { code: "ja", label: "日本語" },
+  { code: "ko", label: "한국어" },
+  { code: "th", label: "ไทย" },
+  { code: "vi", label: "Tiếng Việt" },
+  { code: "id", label: "Bahasa Indonesia" },
+  { code: "ms", label: "Bahasa Melayu" },
   { code: "fil", label: "Filipino" },
-  { code: "sw", label: "Swahili" },
-  { code: "fa", label: "Persian" },
-  { code: "ur", label: "Urdu" },
-  { code: "el", label: "Greek" },
-  { code: "cs", label: "Czech" },
-  { code: "ro", label: "Romanian" },
-  { code: "sv", label: "Swedish" },
-  { code: "no", label: "Norwegian" },
-  { code: "da", label: "Danish" },
-  { code: "fi", label: "Finnish" },
-  { code: "hu", label: "Hungarian" },
+  { code: "sw", label: "Kiswahili" },
+  { code: "fa", label: "فارسی" },
+  { code: "ur", label: "اردو" },
+  { code: "el", label: "Ελληνικά" },
+  { code: "cs", label: "Čeština" },
+  { code: "ro", label: "Română" },
+  { code: "sv", label: "Svenska" },
+  { code: "no", label: "Norsk" },
+  { code: "da", label: "Dansk" },
+  { code: "fi", label: "Suomi" },
+  { code: "hu", label: "Magyar" },
 ];
 
 const profileName = document.getElementById("profileName");
@@ -586,15 +586,6 @@ function ensureLanguageControls() {
   return select;
 }
 
-function navigateWithGoogleTranslate(langCode) {
-  if (!langCode || langCode === DEFAULT_LANGUAGE) {
-    return;
-  }
-
-  const translatedUrl = `https://translate.google.com/translate?sl=auto&tl=${encodeURIComponent(langCode)}&u=${encodeURIComponent(window.location.href)}`;
-  window.location.href = translatedUrl;
-}
-
 const savedFont = parseInt(localStorage.getItem("glex.fontSize") || DEFAULT_FONT, 10);
 fontSizeSimulation = ensureTextSizeSimulation();
 applyFontSize(savedFont);
@@ -614,7 +605,6 @@ if (languageSelect) {
     const selectedLanguage = languageSelect.value || DEFAULT_LANGUAGE;
     localStorage.setItem("glex.language", selectedLanguage);
     document.documentElement.lang = selectedLanguage;
-    navigateWithGoogleTranslate(selectedLanguage);
   });
 }
 
