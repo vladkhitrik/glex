@@ -638,17 +638,54 @@ function ensureLanguageControls() {
   return select;
 }
 
+function detectPreferredLanguage() {
+  const locales =
+    Array.isArray(navigator.languages) && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || DEFAULT_LANGUAGE];
+
+  for (const locale of locales) {
+    if (!locale) {
+      continue;
+    }
+
+    const normalizedLocale = String(locale).toLowerCase();
+    const exactMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase() === normalizedLocale);
+    if (exactMatch) {
+      return exactMatch.code;
+    }
+
+    const baseLocale = normalizedLocale.split("-")[0];
+    const baseMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase() === baseLocale);
+    if (baseMatch) {
+      return baseMatch.code;
+    }
+
+    const regionMatch = LANGUAGE_OPTIONS.find((entry) => entry.code.toLowerCase().startsWith(`${baseLocale}-`));
+    if (regionMatch) {
+      return regionMatch.code;
+    }
+  }
+
+  return DEFAULT_LANGUAGE;
+}
+
 const savedFont = parseInt(localStorage.getItem("glex.fontSize") || DEFAULT_FONT, 10);
 fontSizeSimulation = ensureTextSizeSimulation();
 applyFontSize(savedFont);
 let currentBrightness = applyBrightness(parseInt(localStorage.getItem("glex.brightness") || DEFAULT_BRIGHTNESS, 10));
 languageSelect = ensureLanguageControls();
 
-const savedLanguage = localStorage.getItem("glex.language") || DEFAULT_LANGUAGE;
-document.documentElement.lang = savedLanguage;
+const storedLanguage = localStorage.getItem("glex.language");
+const activeLanguage = storedLanguage || detectPreferredLanguage();
+if (!storedLanguage) {
+  localStorage.setItem("glex.language", activeLanguage);
+}
+
+document.documentElement.lang = activeLanguage;
 if (languageSelect) {
-  if ([...languageSelect.options].some((option) => option.value === savedLanguage)) {
-    languageSelect.value = savedLanguage;
+  if ([...languageSelect.options].some((option) => option.value === activeLanguage)) {
+    languageSelect.value = activeLanguage;
   } else {
     languageSelect.value = DEFAULT_LANGUAGE;
   }
