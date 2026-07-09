@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+html {
+  filter: brightness(var(--glex-brightness));
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -22,7 +26,6 @@ body {
   color: var(--ink);
   background: linear-gradient(180deg, var(--sky-0), var(--sky-1) 45%, var(--sky-2));
   overflow-x: hidden;
-  filter: brightness(var(--glex-brightness));
 }
 
 body.modal-open {

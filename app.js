@@ -22,9 +22,9 @@ let fontSizeSimulation = null;
 const DEFAULT_BG = "#d6f0ff";
 const DEFAULT_FONT = 16;
 const DEFAULT_BRIGHTNESS = 100;
-const MIN_BRIGHTNESS = 60;
-const MAX_BRIGHTNESS = 140;
-const BRIGHTNESS_STEP = 10;
+const MIN_BRIGHTNESS = 20;
+const MAX_BRIGHTNESS = 200;
+const BRIGHTNESS_STEP = 20;
 const DEFAULT_LANGUAGE = "en";
 const LANGUAGE_OPTIONS = [
   { code: "en", label: "English" },
