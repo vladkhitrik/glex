@@ -225,6 +225,48 @@ function openDialog(dialog) {
   }
 }
 
+function ensureMarsOrbitRocket() {
+  if (!document.body || !document.body.classList.contains("mars-landing")) {
+    return;
+  }
+
+  if (!document.getElementById("marsOrbitRocketStyles")) {
+    const style = document.createElement("style");
+    style.id = "marsOrbitRocketStyles";
+    style.textContent = `
+      .mars-landing { --rocket-size: 98px; --rocket-orbit-radius: min(42vw, 500px); }
+      .mars-orbit-rocket { position: fixed; left: 50%; top: 50%; width: var(--rocket-size); height: var(--rocket-size); margin-left: calc(var(--rocket-size) * -0.5); margin-top: calc(var(--rocket-size) * -0.5); z-index: 6; pointer-events: none; transform-origin: 50% 50%; animation: marsOrbitAround 14s linear infinite; }
+      .mars-orbit-rocket .body { position: absolute; left: 33px; top: 20px; width: 32px; height: 48px; border-radius: 50% 50% 40% 40%; background: linear-gradient(180deg, #fff3e9 0%, #ffcfa9 100%); border: 1px solid rgba(118, 52, 24, 0.45); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28); }
+      .mars-orbit-rocket .window { position: absolute; left: 42px; top: 30px; width: 12px; height: 12px; border-radius: 50%; background: #7dd2ff; border: 1px solid rgba(8, 63, 104, 0.45); }
+      .mars-orbit-rocket .fin-left, .mars-orbit-rocket .fin-right { position: absolute; top: 47px; width: 12px; height: 18px; background: #d35f28; }
+      .mars-orbit-rocket .fin-left { left: 24px; clip-path: polygon(100% 0, 0 100%, 100% 100%); }
+      .mars-orbit-rocket .fin-right { left: 62px; clip-path: polygon(0 0, 0 100%, 100% 100%); }
+      .mars-orbit-rocket .flame { position: absolute; left: 44px; top: 68px; width: 13px; height: 22px; border-radius: 55% 55% 70% 70%; background: linear-gradient(180deg, #ffd56a 0%, #ff7a1f 100%); animation: marsFlamePulse 0.45s ease-in-out infinite; }
+      @keyframes marsOrbitAround {
+        0% { transform: rotate(0deg) translateX(var(--rocket-orbit-radius)) rotate(88deg); }
+        25% { transform: rotate(90deg) translateX(var(--rocket-orbit-radius)) rotate(178deg); }
+        50% { transform: rotate(180deg) translateX(var(--rocket-orbit-radius)) rotate(268deg); }
+        75% { transform: rotate(270deg) translateX(var(--rocket-orbit-radius)) rotate(358deg); }
+        100% { transform: rotate(360deg) translateX(var(--rocket-orbit-radius)) rotate(448deg); }
+      }
+      @keyframes marsFlamePulse { 0% { transform: scaleY(0.85); opacity: 0.9; } 100% { transform: scaleY(1.12); opacity: 1; } }
+      @media (orientation: landscape) and (min-width: 900px) { .mars-landing { --rocket-size: 112px; --rocket-orbit-radius: min(44vw, 680px); } }
+      @media (max-width: 760px) { .mars-landing { --rocket-size: 74px; --rocket-orbit-radius: min(45vw, 185px); } }
+    `;
+    document.head.appendChild(style);
+  }
+
+  if (document.querySelector(".mars-orbit-rocket")) {
+    return;
+  }
+
+  const rocket = document.createElement("div");
+  rocket.className = "mars-orbit-rocket";
+  rocket.setAttribute("aria-hidden", "true");
+  rocket.innerHTML = '<span class="body"></span><span class="window"></span><span class="fin-left"></span><span class="fin-right"></span><span class="flame"></span>';
+  document.body.appendChild(rocket);
+}
+
 function ensureCornerHomeButton() {
   // Disabled by request: no floating Home shortcut on pages.
   return;
@@ -448,6 +490,7 @@ loadProfile();
 setActivePanel("learn");
 renderRocketDetailPage();
 removeLegacySettingsControls();
+ensureMarsOrbitRocket();
 ensureCornerHomeButton();
 ensureSettingsQuickNav();
 
