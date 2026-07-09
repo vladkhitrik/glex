@@ -1031,7 +1031,7 @@ main {
   background:
     #050505
     url("assets/mars-landing.jpg")
-    center center / 112% auto no-repeat;
+    center top / cover no-repeat fixed;
 }
 
 .mars-landing .sky-bg {
