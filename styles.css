@@ -620,15 +620,17 @@ main {
 .corner-home-btn {
   position: fixed;
   right: 0.9rem;
-  bottom: 0.9rem;
-  z-index: 30;
-  border: 1px solid rgba(8, 63, 104, 0.22);
+  top: 5.1rem;
+  z-index: 999;
+  border: 2px solid rgba(8, 63, 104, 0.35);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(210,236,255,0.85) 100%);
-  box-shadow: 0 2px 6px rgba(8,63,104,0.13), inset 0 1px 0 rgba(255,255,255,0.9);
+  background: linear-gradient(180deg, #ffae4f 0%, #f27a1a 100%);
+  box-shadow: 0 8px 18px rgba(10, 26, 48, 0.35), inset 0 1px 0 rgba(255,255,255,0.35);
   color: var(--ink);
   font-weight: 700;
-  padding: 0.55rem 0.95rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  padding: 0.62rem 1.05rem;
   text-decoration: none;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
@@ -640,9 +642,17 @@ main {
 
 .space-theme .corner-home-btn,
 .earth-home .corner-home-btn {
-  color: #eaf3ff;
-  border-color: rgba(200, 220, 255, 0.24);
-  background: linear-gradient(180deg, rgba(26, 44, 76, 0.92) 0%, rgba(10, 22, 42, 0.92) 100%);
+  color: #fff7ef;
+  border-color: rgba(255, 210, 165, 0.75);
+  background: linear-gradient(180deg, #ffae4f 0%, #f27a1a 100%);
+}
+
+@media (max-width: 760px) {
+  .corner-home-btn {
+    top: auto;
+    bottom: 1rem;
+    right: 0.7rem;
+  }
 }
 
 #bgColorInput {
