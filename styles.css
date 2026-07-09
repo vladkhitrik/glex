@@ -678,20 +678,20 @@ main {
   width: 100%;
   min-height: 40px;
   border-radius: 12px;
-  border: 1px solid rgba(8, 63, 104, 0.2);
+  border: 2px solid rgba(8, 63, 104, 0.5);
   padding: 0.45rem 0.6rem;
-  color: var(--ink);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 236, 255, 0.85) 100%);
+  color: #0a203a;
+  background: #ffffff;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .space-theme .language-select,
 .earth-home .language-select {
-  color: #eaf3ff;
-  border-color: rgba(200, 220, 255, 0.24);
-  background: linear-gradient(180deg, rgba(26, 44, 76, 0.92) 0%, rgba(10, 22, 42, 0.92) 100%);
+  color: #0a203a;
+  border-color: rgba(8, 63, 104, 0.5);
+  background: #ffffff;
 }
 
 .language-select:focus-visible {
@@ -699,8 +699,8 @@ main {
 }
 
 .language-select option {
-  color: #eaf3ff;
-  background: #0f2342;
+  color: #0a203a;
+  background: #ffffff;
   font-weight: 600;
 }
 
