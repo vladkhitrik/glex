@@ -270,6 +270,44 @@ function ensureSettingsQuickNav() {
   }
 }
 
+function removeLegacySettingsControls() {
+  if (!settingsDialog) {
+    return;
+  }
+
+  const legacySelectors = [
+    "#increaseBrightnessBtn",
+    "#decreaseBrightnessBtn",
+    "#brightnessLabel",
+    ".brightness-controls",
+    ".brightness-title",
+    "#languageSelect",
+    ".language-controls",
+    ".language-label",
+  ];
+
+  legacySelectors.forEach((selector) => {
+    settingsDialog.querySelectorAll(selector).forEach((el) => {
+      const row = el.closest(".settings-row");
+      if (row) {
+        row.remove();
+      } else {
+        el.remove();
+      }
+    });
+  });
+
+  settingsDialog.querySelectorAll("label").forEach((label) => {
+    const text = (label.textContent || "").trim().toLowerCase();
+    if (text === "screen brightness" || text === "language") {
+      label.remove();
+    }
+  });
+
+  localStorage.removeItem("glex.brightness");
+  localStorage.removeItem("glex.language");
+}
+
 function scrollToPanels() {
   if (contentPanels) {
     contentPanels.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -416,6 +454,7 @@ if (imageInput) {
 loadProfile();
 setActivePanel("learn");
 renderRocketDetailPage();
+removeLegacySettingsControls();
 ensureCornerHomeButton();
 ensureSettingsQuickNav();
 
